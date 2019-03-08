@@ -9,17 +9,19 @@
 <ng-container *ngIf="show">
 <form id="VacationForm">
 
-  <div class="form-group" id="SelectForm">
+  <div class="form-group">
       <label>Select Vacation Type</label>
       <br>
-      <select>
-              <option value="1">Annual</option>
-              <option value="2">Casual</option>
+      <select class="form-control" id="vacationType" [(ngModel)]="selectedVacationType" name="first">
+             <option *ngFor="let o of options">
+               {{o.name}}
+             </option>
             </select>
+
  
   </div>
   <br>
-  <button>Confrim</button>
+  <button (click)="decrement()">Confrim</button>
 </form>
 
 
