@@ -1,4 +1,3 @@
-
 <h1>Current Vacations: {{vacationBalance}}</h1>
 <h3>Annual Vacations: {{annualVacation}}</h3>
 <h3>Casual Vacations:{{CasualBalance}}</h3>
@@ -6,25 +5,26 @@
 <button (click)="toggle()" id="bt">Submit a new Vacation</button>
 
 
-<ng-container *ngIf="show">
-<form id="VacationForm">
 
-  <div class="form-group">
+<ng-container *ngIf="show">
+<form>
+
+  <div>
       <label>Select Vacation Type</label>
       <br>
-      <select class="form-control" id="vacationType" [(ngModel)]="selectedVacationType" name="first">
+      <select id="vacationType" [(ngModel)]="selectedVacationType" name="first">
              <option *ngFor="let o of options">
                {{o.name}}
              </option>
             </select>
+            <br>
 
- 
+ <ngbd-datepicker-range></ngbd-datepicker-range>     
   </div>
   <br>
-  <button (click)="decrement()">Confrim</button>
+  
 </form>
-
+<button (click)="decrement()">Confrim</button>
 
 </ng-container>
 <router-outlet></router-outlet> 
-

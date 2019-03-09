@@ -1,14 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+
+    import { Component, OnInit } from '@angular/core';
+    import {FormControl} from '@angular/forms';
+    import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
+
 export class AppComponent {
+
+ 
+  
+  model: NgbDateStruct;
+  date: {year: number, month: number};
+
+  constructor(private calendar: NgbCalendar) {
+  }
+
+  selectToday() {
+    this.model = this.calendar.getToday();
+  }
   title = 'VacationPlannerAngular';
   
-    // get the integer value in case it was stored as a string
+
     
     
   annualVacation=15;
@@ -42,3 +59,5 @@ export class AppComponent {
   }
 
 }
+
+
