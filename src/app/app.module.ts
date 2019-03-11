@@ -24,7 +24,7 @@ import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/
     FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule, BrowserAnimationsModule,
     MatDatepickerModule, MatInputModule,MatNativeDateModule
   ],
-  providers: [],
+  providers: [NgbdDatepickerRange],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

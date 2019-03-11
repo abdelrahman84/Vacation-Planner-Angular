@@ -1,10 +1,11 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'ngbd-datepicker-range',
   templateUrl: './datepicker-range.html',
+
   styles: [`
     .custom-day {
       text-align: center;
@@ -30,7 +31,7 @@ export class NgbdDatepickerRange {
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
-  DiffDate;
+  DiffDate: number;
   enddate;
   startDate;
   
@@ -38,30 +39,39 @@ export class NgbdDatepickerRange {
   constructor(calendar: NgbCalendar) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);  
-        this.startDate=new Date (this.fromDate.year,this.fromDate.month,this.fromDate.day);
-        this.enddate=new Date (this.toDate.year,this.toDate.month,this.toDate.day);
-        this.DiffDate=Math.floor((Date.UTC(this.enddate.getFullYear(),this.enddate.getMonth(),this.enddate.getDate())-Date.UTC(this.startDate.getFullYear(),this.startDate.getMonth(),this.startDate.getDate()) )/(1000 * 60 * 60 * 24));
+        //this.startDate=new Date (this.fromDate.year,this.fromDate.month,this.fromDate.day);
+        //this.enddate=new Date (this.toDate.year,this.toDate.month,this.toDate.day);
+        this.DiffDate=this.calcDaysDiff();
   }
 
   onDateSelection(date: NgbDate) {
+    console.log('onDateSelection:', date);
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
-      this.DiffDate=Math.floor((Date.UTC(this.enddate.getFullYear(),this.enddate.getMonth(),this.enddate.getDate())-Date.UTC(this.startDate.getFullYear(),this.startDate.getMonth(),this.startDate.getDate()) )/(1000 * 60 * 60 * 24));
-           
+      this.DiffDate = this.calcDaysDiff();
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
-      this.enddate=new Date (this.toDate.year,this.toDate.month,this.toDate.day);
-      this.DiffDate=Math.floor((Date.UTC(this.enddate.getFullYear(),this.enddate.getMonth(),this.enddate.getDate())-Date.UTC(this.startDate.getFullYear(),this.startDate.getMonth(),this.startDate.getDate()) )/(1000 * 60 * 60 * 24));
-      
-      }
-       else {
+      this.DiffDate = this.calcDaysDiff();
+    } else {
       this.toDate = null;
       this.fromDate = date;
-      this.startDate=new Date (date.year,date.month,date.day);
-   
     }
-    
   }
+
+  private createDateFromNgbDate(ngbDate: NgbDate): Date {
+    const date: Date = new Date(Date.UTC(ngbDate.year, ngbDate.month-1, ngbDate.day));  
+    return date;
+  }
+
+  private calcDaysDiff(): number {
+    
+    const fromDate: Date = this.createDateFromNgbDate(this.fromDate);
+    const toDate: Date = this.createDateFromNgbDate(this.toDate);  
+    const daysDiff = Math.floor(Math.abs(<any>fromDate - <any>toDate) / (1000*60*60*24));
+    return daysDiff;
+  }
+
+  
 
   isHovered(date: NgbDate) {
     return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
