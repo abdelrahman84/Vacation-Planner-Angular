@@ -32,15 +32,13 @@ export class NgbdDatepickerRange {
   fromDate: NgbDate;
   toDate: NgbDate;
   DiffDate: number;
-  enddate;
-  startDate;
+
   
 
   constructor(calendar: NgbCalendar) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);  
-        //this.startDate=new Date (this.fromDate.year,this.fromDate.month,this.fromDate.day);
-        //this.enddate=new Date (this.toDate.year,this.toDate.month,this.toDate.day);
+        
         this.DiffDate=this.calcDaysDiff();
   }
 
