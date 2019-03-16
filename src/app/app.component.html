@@ -19,11 +19,11 @@
             </select>
             <br>
 
- <ngbd-datepicker-range></ngbd-datepicker-range>     
+      <ngbd-datepicker-range (dateDifferenceEvent)="setDifference($event)"></ngbd-datepicker-range>    
   </div>
   <br>
 
-  <p>Child, diff in day {{DiffDate}}</p>
+
   
 </form>
 <button (click)="decrement()">Confrim</button>

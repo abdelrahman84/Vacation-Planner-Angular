@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from '@angular/compiler/src/util';
 
@@ -31,7 +31,9 @@ export class NgbdDatepickerRange {
   hoveredDate: NgbDate;
   fromDate: NgbDate;
   toDate: NgbDate;
-  DiffDate: number;
+  DiffDate:number;
+  @Output() dateDifferenceEvent  = new EventEmitter();
+  
 
   
 
@@ -66,6 +68,7 @@ export class NgbdDatepickerRange {
     const fromDate: Date = this.createDateFromNgbDate(this.fromDate);
     const toDate: Date = this.createDateFromNgbDate(this.toDate);  
     const daysDiff = Math.floor(Math.abs(<any>fromDate - <any>toDate) / (1000*60*60*24));
+    this.dateDifferenceEvent.emit(daysDiff);
     return daysDiff;
   }
 

@@ -2,7 +2,7 @@
     import { Component, OnInit, Input } from '@angular/core';
     import {FormControl} from '@angular/forms';
     import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
-    import {NgbdDatepickerRange} from './datepicker-range';
+    
 
 @Component({
   selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent {
   model: NgbDateStruct;
   date: {year: number, month: number};
 
-  constructor(private calendar: NgbCalendar, private NgbdDatepickerRange: NgbdDatepickerRange) {
+  constructor(private calendar: NgbCalendar) {
   }
 
   selectToday() {
@@ -33,6 +33,8 @@ export class AppComponent {
   public show:boolean = false;
   public buttonName:any = 'Show';
   public selectedVacationType;
+  DiffDate=10;
+  
   
   
   
@@ -48,15 +50,23 @@ export class AppComponent {
     this.show = !this.show;
    }
 
+   setDifference($event) {
+    this.DiffDate = $event; 
+  }
+
   decrement(){
     if (this.selectedVacationType=="Annual"){
-      this.annualVacation=this.annualVacation-this.NgbdDatepickerRange.DiffDate;
+      this.annualVacation=this.annualVacation-this.DiffDate;
+      alert('Annaul Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
     }
     else if (this.selectedVacationType=="Casual"){
-      this.CasualBalance=this.CasualBalance-this.NgbdDatepickerRange.DiffDate;
+  this.CasualBalance=this.CasualBalance-this.DiffDate;
+      alert('Casual Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
     }
+
+    else {alert('Please Submit All Fields')}
 
   }
 
