@@ -63,18 +63,21 @@ export class AppComponent {
       this.annualVacation=this.annualVacation-this.DiffDate;
       alert('Annaul Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
+      this.VacationInstance = new Vacation (this.DiffDate,this.selectedVacationType,this.dateNow);;
+    this.vacations.push(this.VacationInstance);
     }
     else if (this.selectedVacationType=="Casual"){
   this.CasualBalance=this.CasualBalance-this.DiffDate;
       alert('Casual Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
+      this.VacationInstance = new Vacation (this.DiffDate,this.selectedVacationType,this.dateNow);;
+    this.vacations.push(this.VacationInstance);
     }
 
-    else {alert('Please Submit All Fields')}
+    else {alert('Please Submit All Fields')
+  
+  }
      
-    this.VacationInstance = new Vacation (this.DiffDate,this.selectedVacationType,this.dateNow);;
-    this.vacations.push(this.VacationInstance);
-    console.log(this.vacations);
 
 
   }
