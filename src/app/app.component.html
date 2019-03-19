@@ -1,32 +1,43 @@
+<div id="document">
 <h1>Current Vacations: {{vacationBalance}}</h1>
 <h3>Annual Vacations: {{annualVacation}}</h3>
 <h3>Casual Vacations:{{CasualBalance}}</h3>
 
-<button (click)="toggle()" id="bt">Submit a new Vacation</button>
+<button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
 
 
 
 <ng-container *ngIf="show">
-<form>
+<form class="form-horizontal">
 
   <div>
       <label>Select Vacation Type</label>
       <br>
-      <select id="vacationType" [(ngModel)]="selectedVacationType" name="first">
+      <select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
              <option *ngFor="let o of options">
                {{o.name}}
              </option>
             </select>
             <br>
 
-      <ngbd-datepicker-range (dateDifferenceEvent)="setDifference($event)"></ngbd-datepicker-range>    
+      <ngbd-datepicker-range (dateDifferenceEvent)="setDifference($event)"></ngbd-datepicker-range>  
+        
   </div>
   <br>
+  <div>Submitted Vacations:
+   
+   
+     <!-- <div>{{vacations |json}}</div> -->
+     <li *ngFor="let v of vacations">{{v|json}}</li>
+     
+    
 
+  </div>
 
   
 </form>
-<button (click)="decrement()">Confrim</button>
+<button (click)="decrement()" class="btn-success">Confrim</button>
 
 </ng-container>
 <router-outlet></router-outlet> 
+</div>

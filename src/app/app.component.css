@@ -1,4 +1,5 @@
-.no-animate {
-    -webkit-transition: none !important;
-    transition: none !important;
- }
+#document{
+    margin:30px;
+}
+
+

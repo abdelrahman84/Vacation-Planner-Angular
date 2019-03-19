@@ -26,7 +26,7 @@ import { stringify } from '@angular/compiler/src/util';
     }
   `]
 })
-export class NgbdDatepickerRange {
+export class NgbdDatepickerRange {    
 
   hoveredDate: NgbDate;
   fromDate: NgbDate;
@@ -39,7 +39,7 @@ export class NgbdDatepickerRange {
 
   constructor(calendar: NgbCalendar) {
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 10);  
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 1);  
         
         this.DiffDate=this.calcDaysDiff();
   }

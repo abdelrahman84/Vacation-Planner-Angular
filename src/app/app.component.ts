@@ -2,6 +2,8 @@
     import { Component, OnInit, Input } from '@angular/core';
     import {FormControl} from '@angular/forms';
     import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+    import { Vacation } from './vacation.model';
+    
     
 
 @Component({
@@ -11,10 +13,12 @@
 })
 
 
+
 export class AppComponent {
 
+  
 
- 
+  
   model: NgbDateStruct;
   date: {year: number, month: number};
 
@@ -33,10 +37,10 @@ export class AppComponent {
   public show:boolean = false;
   public buttonName:any = 'Show';
   public selectedVacationType;
-  DiffDate=10;
-  
-  
-  
+  DiffDate=1;
+  VacationInstance;
+  dateNow : Date = new Date();
+  vacations=[];
   
 
   options = [
@@ -67,6 +71,11 @@ export class AppComponent {
     }
 
     else {alert('Please Submit All Fields')}
+     
+    this.VacationInstance = new Vacation (this.DiffDate,this.selectedVacationType,this.dateNow);;
+    this.vacations.push(this.VacationInstance);
+    console.log(this.vacations);
+
 
   }
 
