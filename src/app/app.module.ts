@@ -8,6 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgbdDatepickerRange } from './datepicker-range';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/material';
+import { UserComponent } from './user/user.component';
 
 
 
@@ -16,7 +17,7 @@ import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange
+    AppComponent, NgbdDatepickerRange, UserComponent
   ],
   imports: [
     BrowserModule,
