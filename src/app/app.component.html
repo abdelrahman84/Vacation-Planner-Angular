@@ -1,11 +1,29 @@
+<nav class="navbar navbar-light bg-light">
+  <a routerLink="/user" routerLinkActive="active">Create An Account</a>
+
+   
+  
+      <div class="float-right form-inline">
+      <span class="navbar-text">Already have an account?</span>
+      <a class="nav-link"><b>Login</b></a>
+      </div>
+  
+  
+</nav>
+
+
 
 
 
 <div id="document">
+
+    
+      
+
+
+
    
-    <nav>
-        <a routerLink="/user">Create An Account</a>
-      </nav>
+    
 <h1>Current Vacations: {{vacationBalance}}</h1>
 <h3>Annual Vacations: {{annualVacation}}</h3>
 <h3>Casual Vacations:{{CasualBalance}}</h3>
@@ -27,7 +45,7 @@
             </select>
             <br>
 
-      <ngbd-datepicker-range (dateDifferenceEvent)="setDifference($event)"></ngbd-datepicker-range>  
+      <ngbd-datepicker-range (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range>  
         
   </div>
   <br>
@@ -46,5 +64,8 @@
 <button (click)="decrement()" class="btn-success">Confrim</button>
 
 </ng-container>
-<router-outlet></router-outlet> 
 </div>
+
+<router-outlet></router-outlet>
+
+
