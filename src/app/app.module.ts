@@ -4,16 +4,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbdDatepickerRange } from './datepicker-range';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/material';
 import { UserComponent } from './user/user.component';
-import { AppHeaderComponent } from './app-header/app-header.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import bootstrap from "bootstrap";
+import { AlertComponent } from './alert/alert.component';
+import { HomeComponent } from './home/home.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
+import { fakeBackendProvider } from './_helpers';
+import { JwtInterceptor, ErrorInterceptor } from './_helpers';
+
 
 
 
@@ -23,7 +27,7 @@ import bootstrap from "bootstrap";
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, UserComponent, AppHeaderComponent, LoginComponent, HomeComponent
+    AppComponent, NgbdDatepickerRange, AlertComponent, UserComponent, HomeComponent, LoginComponent, RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +35,10 @@ import bootstrap from "bootstrap";
     FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule, BrowserAnimationsModule,
     MatDatepickerModule, MatInputModule,MatNativeDateModule
   ],
-  providers: [NgbdDatepickerRange],
+  providers: [NgbdDatepickerRange,{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    fakeBackendProvider
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

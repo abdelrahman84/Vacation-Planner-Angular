@@ -1,4 +1,4 @@
-<nav class="navbar navbar-light bg-light">
+<!-- <nav class="navbar navbar-light bg-light">
   <a routerLink="/user" routerLinkActive="active">Create An Account</a>
 
    
@@ -9,10 +9,32 @@
       </div>
   
   
+</nav> -->
+
+
+
+
+
+
+<!-- nav -->
+<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+  <div class="navbar-nav">
+      <a class="nav-item nav-link" routerLink="/">Home</a>
+      <a class="nav-item nav-link" (click)="logout()">Logout</a>
+  </div>
 </nav>
 
-
-
+<!-- main app container -->
+<div class="jumbotron">
+  <div class="container">
+      <div class="row">
+          <div class="col-sm-6 offset-sm-3">
+              <alert></alert>
+              <router-outlet></router-outlet>
+          </div>
+      </div>
+  </div>
+</div>
 
 <div id="document">
 
@@ -23,48 +45,48 @@
 
    
     
-<h1>Current Vacations: {{vacationBalance}}</h1>
-<h3>Annual Vacations: {{annualVacation}}</h3>
-<h3>Casual Vacations:{{CasualBalance}}</h3>
-
-<button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
-
-
-
-<ng-container *ngIf="show">
-<form class="form-horizontal">
-
-  <div>
-      <label>Select Vacation Type</label>
-      <br>
-      <select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
-             <option *ngFor="let o of options">
-               {{o.name}}
-             </option>
-            </select>
-            <br>
-
-      <ngbd-datepicker-range (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range>  
-        
-  </div>
-  <br>
-  <div>Submitted Vacations:
-   
-   
-     <!-- <div>{{vacations |json}}</div> -->
-     <li *ngFor="let v of vacations">{{v|json}}</li>
-     
-    
-
-  </div>
-
+  <h1>Current Vacations: {{vacationBalance}}</h1>
+  <h3>Annual Vacations: {{annualVacation}}</h3>
+  <h3>Casual Vacations:{{CasualBalance}}</h3>
   
-</form>
-<button (click)="decrement()" class="btn-success">Confrim</button>
-
-</ng-container>
-</div>
-
-<router-outlet></router-outlet>
+  <button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
+  
+  
+  
+  <ng-container *ngIf="show">
+  <form class="form-horizontal">
+  
+    <div>
+        <label>Select Vacation Type</label>
+        <br>
+        <select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
+               <option *ngFor="let o of options">
+                 {{o.name}}
+               </option>
+              </select>
+              <br>
+  
+        <ngbd-datepicker-range (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range>  
+          
+    </div>
+    <br>
+    <div>Submitted Vacations:
+     
+     
+       <!-- <div>{{vacations |json}}</div> -->
+       <li *ngFor="let v of vacations">{{v|json}}</li>
+       
+      
+  
+    </div>
+  
+    
+  </form>
+  <button (click)="decrement()" class="btn-success">Confrim</button>
+  
+  </ng-container>
+  </div>
+  
+  
 
 

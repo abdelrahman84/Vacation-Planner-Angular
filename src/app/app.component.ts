@@ -1,9 +1,12 @@
 
-    import { Component, OnInit,    } from '@angular/core';
+    import { Component, OnInit} from '@angular/core';
     import {FormControl} from '@angular/forms';
     import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
     import { Vacation } from './vacation.model';
     import { RouterModule, Routes } from '@angular/router';
+    import { Router } from '@angular/router';
+    import { AuthenticationService } from './_services';
+    import { User } from './_models';
     
     
 
@@ -17,14 +20,20 @@
 
 export class AppComponent {
 
-  
-
+  currentUser: User;
   
   model: NgbDateStruct;
   date: {year: number, month: number};
 
-  constructor(private calendar: NgbCalendar) {
+  constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService) {
+
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+}
 
   selectToday() {
     this.model = this.calendar.getToday();
