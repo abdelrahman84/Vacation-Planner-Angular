@@ -1,12 +1,11 @@
-<nav class="navbar" *ngIf="currentUser">
-  
-  <div class="container-fluid  navbar-nav d-flex flex-row justify-content-between jumbotron ">
+<nav class="navbar navbar-dark bg-dark d-flex flex-row justify-content-between jumbotron" *ngIf="currentUser">
+
      
-      <a class="nav-item nav-link p-2" routerLink="/">Home</a>
+      <a class="nav-item nav-link" routerLink="/">Home</a>
       <span class="navbar-text h-100 d-flex align-items-center mx-auto">Welcome {{currentUser.firstName}}</span>
       <a class="nav-item nav-link float-right" (click)="logout()">Logout</a>
       
-      </div>
+     
 
   
   
@@ -22,12 +21,6 @@
 
 <div id="document">
 
-    
-      
-
-
-
-   
     
   <h1>Current Vacations: {{vacationBalance}}</h1>
   <h3>Annual Vacations: {{annualVacation}}</h3>
@@ -60,7 +53,6 @@
        <!-- <div>{{vacations |json}}</div> -->
        <li *ngFor="let v of vacations">{{v|json}}</li>
        
-      
   
     </div>
   
