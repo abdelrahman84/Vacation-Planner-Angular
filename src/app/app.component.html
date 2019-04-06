@@ -1,40 +1,24 @@
-<!-- <nav class="navbar navbar-light bg-light">
-  <a routerLink="/user" routerLinkActive="active">Create An Account</a>
-
-   
+<nav class="navbar" *ngIf="currentUser">
   
-      <div class="float-right form-inline">
-      <span class="navbar-text">Already have an account?</span>
-      <a class="nav-link"><b>Login</b></a>
+  <div class="container-fluid  navbar-nav d-flex flex-row justify-content-between jumbotron ">
+     
+      <a class="nav-item nav-link p-2" routerLink="/">Home</a>
+      <span class="navbar-text h-100 d-flex align-items-center mx-auto">Welcome {{currentUser.firstName}}</span>
+      <a class="nav-item nav-link float-right" (click)="logout()">Logout</a>
+      
       </div>
+
   
   
-</nav> -->
-
-
-
-
-
-
-<!-- nav -->
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-  <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/">Home</a>
-      <a class="nav-item nav-link" (click)="logout()">Logout</a>
-  </div>
 </nav>
 
-<!-- main app container -->
-<div class="jumbotron">
-  <div class="container">
-      <div class="row">
-          <div class="col-sm-6 offset-sm-3">
+
+<div class="container-fluid">
               <alert></alert>
               <router-outlet></router-outlet>
-          </div>
-      </div>
-  </div>
+
 </div>
+        
 
 <div id="document">
 
