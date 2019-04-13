@@ -17,27 +17,31 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { fakeBackendProvider } from './_helpers';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
-
-
-
-
-
+import { AngularFireModule } from '@angular/fire';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { environment } from '../environments/environment';
+import {VacationService} from './vacation.service';
+import { VacationsListComponent } from './vacations-list/vacations-list.component'
+import { DatePipe } from '@angular/common';
+import { Pipe, PipeTransform } from '@angular/core';
+  
 
 
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, AlertComponent, UserComponent, HomeComponent, LoginComponent, RegisterComponent
+    AppComponent, NgbdDatepickerRange, AlertComponent, UserComponent, HomeComponent, LoginComponent, RegisterComponent, VacationsListComponent  
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule, BrowserAnimationsModule,
-    MatDatepickerModule, MatInputModule,MatNativeDateModule
+    MatDatepickerModule, MatInputModule,MatNativeDateModule, AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFirestoreModule,
   ],
   providers: [NgbdDatepickerRange,{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider
+    fakeBackendProvider, VacationService, DatePipe
   ],
   bootstrap: [AppComponent]
 })

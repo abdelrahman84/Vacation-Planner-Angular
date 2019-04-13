@@ -1,4 +1,3 @@
-
     import { Component, OnInit} from '@angular/core';
     import {FormControl} from '@angular/forms';
     import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
@@ -7,7 +6,11 @@
     import { Router } from '@angular/router';
     import { AuthenticationService } from './_services';
     import { User } from './_models';
-    
+    import {VacationService} from 'src/app/vacation.service';
+    import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+    import { AngularFirestore } from '@angular/fire/firestore';
+    import { DatePipe } from '@angular/common';
+
     
 
 @Component({
@@ -20,12 +23,15 @@
 
 export class AppComponent {
 
+  public isCollapsed = false;
+
   currentUser: User;
   
   model: NgbDateStruct;
   date: {year: number, month: number};
 
-  constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService, 
+    private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe) {
 
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -48,9 +54,10 @@ export class AppComponent {
   public buttonName:any = 'Show';
   public selectedVacationType;
   DiffDate=1;
-  VacationInstance;
   dateNow : Date = new Date();
+  vacation: Vacation;
   vacations=[];
+  
   
 
   options = [
@@ -59,6 +66,10 @@ export class AppComponent {
   ]
 
   ngOnInit () {  }
+
+  transformDate(date) {
+    this.datePipe.transform(date, 'yyyy-MM-dd'); 
+  }
 
   toggle() {
     this.show = !this.show;
@@ -73,18 +84,29 @@ export class AppComponent {
       this.annualVacation=this.annualVacation-this.DiffDate;
       alert('Annaul Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
-      this.VacationInstance = new Vacation (this.DiffDate,this.selectedVacationType,this.dateNow);;
-    this.vacations.push(this.VacationInstance);
+
+      
+
+      
+
+      this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow};
+      this.firestore.collection('vacations').add(this.vacation);
+      
+
+     
     }
     else if (this.selectedVacationType=="Casual"){
   this.CasualBalance=this.CasualBalance-this.DiffDate;
       alert('Casual Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
-      this.VacationInstance = new Vacation (this.DiffDate,this.selectedVacationType,this.dateNow);;
-    this.vacations.push(this.VacationInstance);
+
+      this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow};
+      this.firestore.collection('vacations').add(this.vacation);
+     
+    
     }
 
-    else {alert('Please Submit All Fields')
+      else {alert('Please Submit All Fields')
   
   }
      

@@ -1,5 +1,6 @@
 export class Vacation {
-  constructor (private NoOfDays: number, private vacationType:number, private SubmissionDate: Date){}
-
-}
-
+    id: string;
+    NoOfDays: number; 
+    vacationType:number; 
+    SubmissionDate: Date;
+  }

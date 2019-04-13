@@ -1,0 +1,18 @@
+
+<h1>Vacations:</h1>
+<br>
+<br>
+<tbody class="table">
+  <tr>
+    <td>No of Days</td>
+    <td>Vacation Type</td>
+    <td>Sumbission Date</td>
+  </tr>
+  <tr *ngFor="let v of list">
+    <td>{{v.NoOfDays|json}}</td>
+    <td>{{v.vacationType|json}}</td>
+    <td>{{v.SubmissionDate.toDate()|date: 'dd/MM/yyyy'}}</td>
+
+  </tr>
+
+</tbody>
