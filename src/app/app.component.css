@@ -2,5 +2,8 @@
     margin:30px;
 }
 
-
+.nav-ul {
+    padding: 0;
+    list-style-type: none;
+}
 

@@ -1,7 +1,5 @@
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;" *ngIf="currentUser">
 
-
-   
     <div class="d-flex flex-column">
 
         
@@ -20,19 +18,24 @@
     </div>
 
 
+    <div>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed" class="collapse">  
+          <ul class="ist-group ml-10 nav-ul">
+            <a class="nav-item nav-link" routerLink="/vacations">Submitted Vacations</a> 
+         
+          </ul>
+    
+      </div>
+          </div> 
+
+
 
   </div> 
         
  
 </nav>
 
-<div>
-    <div id="collapseExample" [ngbCollapse]="isCollapsed" class="collapse flex-row p-10" style="width: 1300px;">  
 
-        <a class="nav-item nav-link" routerLink="/vacations">Submitted Vacations</a> 
-
-  </div>
-      </div> 
      
 
 
@@ -59,7 +62,7 @@
   <ng-container *ngIf="show">
   <form class="form-horizontal">
   
-    <div>
+    <div style="width: 50%;">
         <label>Select Vacation Type</label>
         <br>
         <select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">

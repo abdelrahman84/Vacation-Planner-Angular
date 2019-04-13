@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {VacationService} from 'src/app/vacation.service'
+import {VacationService} from 'src/app/_services/vacation.service'
 import { Vacation } from 'src/app/vacation.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';

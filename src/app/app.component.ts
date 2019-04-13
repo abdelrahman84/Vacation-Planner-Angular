@@ -6,7 +6,7 @@
     import { Router } from '@angular/router';
     import { AuthenticationService } from './_services';
     import { User } from './_models';
-    import {VacationService} from 'src/app/vacation.service';
+    import {VacationService} from 'src/app/_services/vacation.service';
     import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
     import { AngularFirestore } from '@angular/fire/firestore';
     import { DatePipe } from '@angular/common';

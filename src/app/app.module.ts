@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbdDatepickerRange } from './datepicker-range';
+import { NgbdDatepickerRange } from './datepicker/datepicker-range';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/material';
 import { UserComponent } from './user/user.component';
@@ -20,7 +20,7 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
-import {VacationService} from './vacation.service';
+import {VacationService} from './_services/vacation.service';
 import { VacationsListComponent } from './vacations-list/vacations-list.component'
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
