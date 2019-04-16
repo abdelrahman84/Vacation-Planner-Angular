@@ -21,6 +21,9 @@ getVacations(){
   return this.firestore.collection('vacations').snapshotChanges();
 }
 
+getAnnual(){
+  return this.firestore.collection('vacationBalance').snapshotChanges();
+}
 
 }
 

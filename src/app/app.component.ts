@@ -6,7 +6,7 @@
     import { Router } from '@angular/router';
     import { AuthenticationService } from './_services';
     import { User } from './_models';
-    import {VacationService} from 'src/app/_services/vacation.service';
+    import {VacationService} from './_services/vacation.service';
     import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
     import { AngularFirestore } from '@angular/fire/firestore';
     import { DatePipe } from '@angular/common';
@@ -57,7 +57,9 @@ export class AppComponent {
   dateNow : Date = new Date();
   vacation: Vacation;
   vacations=[];
-  
+  AnnaulVacationRef;
+ 
+
   
 
   options = [
@@ -65,7 +67,11 @@ export class AppComponent {
     { name: "Casual", value: 2 }
   ]
 
-  ngOnInit () {  }
+  ngOnInit () { 
+
+     
+    this.getAnnualVacations();
+}
 
   transformDate(date) {
     this.datePipe.transform(date, 'yyyy-MM-dd'); 
@@ -75,9 +81,19 @@ export class AppComponent {
     this.show = !this.show;
    }
 
+   getAnnualVacations(){
+    this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').get().subscribe(value => {
+      const data = value.data();
+      console.log(data);
+      this.AnnaulVacationRef = data;
+    });
+   }
+
    setDifference($event) {
     this.DiffDate = $event; 
   }
+
+ 
 
   decrement(){
     if (this.selectedVacationType=="Annual"){
@@ -85,14 +101,12 @@ export class AppComponent {
       alert('Annaul Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
 
-      
-
-      
-
       this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow};
       this.firestore.collection('vacations').add(this.vacation);
-      
 
+      this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Annual: this.annualVacation});
+
+      this.getAnnualVacations();
      
     }
     else if (this.selectedVacationType=="Casual"){
@@ -110,7 +124,9 @@ export class AppComponent {
   
   }
      
-  }
+  } 
+
+  
 
 }
 

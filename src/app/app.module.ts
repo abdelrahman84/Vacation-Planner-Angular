@@ -24,9 +24,8 @@ import {VacationService} from './_services/vacation.service';
 import { VacationsListComponent } from './vacations-list/vacations-list.component'
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
+import {Vacation} from './vacation.model';
   
-
-
 
 @NgModule({
   declarations: [
@@ -41,7 +40,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   ],
   providers: [NgbdDatepickerRange,{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider, VacationService, DatePipe
+    fakeBackendProvider, VacationService, DatePipe, Vacation
   ],
   bootstrap: [AppComponent]
 })

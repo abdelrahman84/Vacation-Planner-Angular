@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {VacationService} from 'src/app/_services/vacation.service'
-import { Vacation } from 'src/app/vacation.model';
+import {VacationService} from '../_services/vacation.service';
+import { Vacation } from '../vacation.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
@@ -27,7 +27,5 @@ export class VacationsListComponent implements OnInit {
     });
    
   }
-
-
 
 }
