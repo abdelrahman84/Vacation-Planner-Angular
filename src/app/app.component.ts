@@ -57,7 +57,8 @@ export class AppComponent {
   dateNow : Date = new Date();
   vacation: Vacation;
   vacations=[];
-  AnnaulVacationRef;
+  VacationRef;
+ 
  
 
   
@@ -70,7 +71,8 @@ export class AppComponent {
   ngOnInit () { 
 
      
-    this.getAnnualVacations();
+    this.getVacations();
+    
 }
 
   transformDate(date) {
@@ -81,13 +83,16 @@ export class AppComponent {
     this.show = !this.show;
    }
 
-   getAnnualVacations(){
+   getVacations(){
     this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').get().subscribe(value => {
       const data = value.data();
       console.log(data);
-      this.AnnaulVacationRef = data;
+      this.VacationRef = data;
     });
    }
+
+
+  
 
    setDifference($event) {
     this.DiffDate = $event; 
@@ -106,7 +111,9 @@ export class AppComponent {
 
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Annual: this.annualVacation});
 
-      this.getAnnualVacations();
+      this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
+
+      this.getVacations();
      
     }
     else if (this.selectedVacationType=="Casual"){
@@ -116,6 +123,11 @@ export class AppComponent {
 
       this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow};
       this.firestore.collection('vacations').add(this.vacation);
+
+      this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Casual: this.CasualBalance});
+      this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
+      
+      this.getVacations();
      
     
     }
