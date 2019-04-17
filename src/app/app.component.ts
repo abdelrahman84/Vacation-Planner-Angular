@@ -58,6 +58,7 @@ export class AppComponent {
   vacation: Vacation;
   vacations=[];
   VacationRef;
+  
  
  
 
@@ -91,9 +92,6 @@ export class AppComponent {
     });
    }
 
-
-  
-
    setDifference($event) {
     this.DiffDate = $event; 
   }
@@ -105,6 +103,7 @@ export class AppComponent {
       this.annualVacation=this.annualVacation-this.DiffDate;
       alert('Annaul Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
+     
 
       this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow};
       this.firestore.collection('vacations').add(this.vacation);
@@ -126,7 +125,7 @@ export class AppComponent {
 
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Casual: this.CasualBalance});
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
-      
+
       this.getVacations();
      
     

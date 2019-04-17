@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
-import {Vacation} from 'src/app/vacation.model';
+import {Vacation} from '../vacation.model';
 import { reject } from 'q';
 
 
