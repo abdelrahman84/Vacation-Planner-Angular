@@ -32,7 +32,16 @@ export class NgbdDatepickerRange {
   fromDate: NgbDate;
   toDate: NgbDate;
   DiffDate:number;
+  startDate;
+  endDate;
+
   @Output() dateDifferenceEvent  = new EventEmitter();
+
+  @Output() FromDateEvent = new EventEmitter();
+
+  @Output() EndDateEvent = new EventEmitter();
+
+  
   
 
   
@@ -41,7 +50,11 @@ export class NgbdDatepickerRange {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 1);  
         
-        this.DiffDate=this.calcDaysDiff();
+    this.DiffDate=this.calcDaysDiff();
+
+ 
+
+        
   }
 
   onDateSelection(date: NgbDate) {
@@ -49,12 +62,21 @@ export class NgbdDatepickerRange {
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
       this.DiffDate = this.calcDaysDiff();
+      
+      this.FromDateEvent.emit(date);
+
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
       this.DiffDate = this.calcDaysDiff();
+
+      this.EndDateEvent.emit(date);
+      
+      
     } else {
       this.toDate = null;
       this.fromDate = date;
+
+      this.FromDateEvent.emit(date);
     }
   }
 
@@ -69,6 +91,7 @@ export class NgbdDatepickerRange {
     const toDate: Date = this.createDateFromNgbDate(this.toDate);  
     const daysDiff = Math.floor(Math.abs(<any>fromDate - <any>toDate) / (1000*60*60*24));
     this.dateDifferenceEvent.emit(daysDiff);
+   
     return daysDiff;
   }
 

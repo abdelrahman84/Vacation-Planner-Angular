@@ -1,6 +1,7 @@
 export class Vacation {
-  
     NoOfDays: number; 
-    vacationType:number; 
+    vacationType:string; 
     SubmissionDate: Date;
+    fromDate;
+    endDate;
   }

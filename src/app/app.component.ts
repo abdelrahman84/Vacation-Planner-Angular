@@ -31,7 +31,8 @@ export class AppComponent {
   date: {year: number, month: number};
 
   constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService, 
-    private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe) {
+    private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe
+    ) {
 
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -49,7 +50,7 @@ export class AppComponent {
 
   annualVacation=15;
   CasualBalance=6;
-  vacationBalance=this.annualVacation+this.CasualBalance;
+  vacationBalance= this.annualVacation+ this.CasualBalance;
   public show:boolean = false;
   public buttonName:any = 'Show';
   public selectedVacationType;
@@ -58,11 +59,10 @@ export class AppComponent {
   vacation: Vacation;
   vacations=[];
   VacationRef;
+  startDate = this.calendar.getToday();
+  endDate= this.calendar.getNext(this.calendar.getToday(), 'd', 1); 
   
- 
- 
 
-  
 
   options = [
     { name: "Annual", value: 1 },
@@ -87,13 +87,20 @@ export class AppComponent {
    getVacations(){
     this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').get().subscribe(value => {
       const data = value.data();
-      console.log(data);
       this.VacationRef = data;
     });
    }
 
    setDifference($event) {
     this.DiffDate = $event; 
+  }
+
+  setFromDate($event) {
+    this.startDate = $event;
+  }
+
+  setEndDate($event) {
+    this.endDate = $event;
   }
 
  
@@ -103,9 +110,9 @@ export class AppComponent {
       this.annualVacation=this.annualVacation-this.DiffDate;
       alert('Annaul Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
-     
-
-      this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow};
+      
+      this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow,
+      fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)};
       this.firestore.collection('vacations').add(this.vacation);
 
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Annual: this.annualVacation});
@@ -120,7 +127,8 @@ export class AppComponent {
       alert('Casual Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
 
-      this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow};
+      this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow,
+      fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)};
       this.firestore.collection('vacations').add(this.vacation);
 
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Casual: this.CasualBalance});
