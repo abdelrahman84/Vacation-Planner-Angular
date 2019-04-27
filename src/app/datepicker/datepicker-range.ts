@@ -24,6 +24,7 @@ import { stringify } from '@angular/compiler/src/util';
     .custom-day.faded {
       background-color: rgba(2, 117, 216, 0.5);
     }
+    
   `]
 })
 export class NgbdDatepickerRange {    
@@ -53,15 +54,6 @@ export class NgbdDatepickerRange {
     return this.disabledDates.find(x => NgbDate.from(x).equals(date))? true: false;
   }
 
-  
-
-  // isDisabled = (date: NgbDateStruct) => {
-  //   for (var i =0; i < this.disabeledDays.length;i++){
-  //     date= this.disabeledDays[i]; 
-  //     console.log(date);   
-  //   } return date;
-  // } 
-
  
   onDateSelection(date: NgbDate) {
     console.log('onDateSelection:', date);
@@ -75,6 +67,8 @@ export class NgbdDatepickerRange {
       this.toDate = date;
       this.DiffDate = this.calcDaysDiff();
       this.EndDateEvent.emit(date);
+
+      this.disabledDates.push(date);
       
       
     } else {
@@ -113,13 +107,5 @@ export class NgbdDatepickerRange {
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
   }
-
-  // public selectedDays(date: NgbDate) {
-  //   //this.selectionDays= date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date);
-  //   //return this.selectionDays;
-  //   if (this.fromDate && this.toDate){
-  //   return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date);
-  // }
-  //  }
 
 }
