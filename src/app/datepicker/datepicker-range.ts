@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {NgbDate, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+import {NgbDate, NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from '@angular/compiler/src/util';
 
 @Component({
@@ -34,6 +34,8 @@ export class NgbdDatepickerRange {
   DiffDate:number;
   startDate;
   endDate;
+  disabledDates: NgbDateStruct[] = new Array();
+  
 
   @Output() dateDifferenceEvent  = new EventEmitter();
 
@@ -41,34 +43,37 @@ export class NgbdDatepickerRange {
 
   @Output() EndDateEvent = new EventEmitter();
 
-  
-  
-
-  
-
   constructor(calendar: NgbCalendar) {
     this.fromDate = calendar.getToday();
-    this.toDate = calendar.getNext(calendar.getToday(), 'd', 1);  
-        
-    this.DiffDate=this.calcDaysDiff();
-
- 
-
-        
+    this.toDate = calendar.getNext(calendar.getToday(), 'd', 1);      
+    this.DiffDate=this.calcDaysDiff();     
   }
 
+  isDisabled = (date: NgbDateStruct, current: {month: number, year: number})=> {
+    return this.disabledDates.find(x => NgbDate.from(x).equals(date))? true: false;
+  }
+
+  
+
+  // isDisabled = (date: NgbDateStruct) => {
+  //   for (var i =0; i < this.disabeledDays.length;i++){
+  //     date= this.disabeledDays[i]; 
+  //     console.log(date);   
+  //   } return date;
+  // } 
+
+ 
   onDateSelection(date: NgbDate) {
     console.log('onDateSelection:', date);
     if (!this.fromDate && !this.toDate) {
       this.fromDate = date;
       this.DiffDate = this.calcDaysDiff();
-      
       this.FromDateEvent.emit(date);
+      
 
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
       this.DiffDate = this.calcDaysDiff();
-
       this.EndDateEvent.emit(date);
       
       
@@ -77,9 +82,11 @@ export class NgbdDatepickerRange {
       this.fromDate = date;
 
       this.FromDateEvent.emit(date);
+
+      this.disabledDates.push(date);
     }
   }
-
+ 
   private createDateFromNgbDate(ngbDate: NgbDate): Date {
     const date: Date = new Date(Date.UTC(ngbDate.year, ngbDate.month-1, ngbDate.day));  
     return date;
@@ -95,8 +102,6 @@ export class NgbdDatepickerRange {
     return daysDiff;
   }
 
-  
-
   isHovered(date: NgbDate) {
     return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
   }
@@ -107,6 +112,14 @@ export class NgbdDatepickerRange {
 
   isRange(date: NgbDate) {
     return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date) || this.isHovered(date);
-    
   }
+
+  // public selectedDays(date: NgbDate) {
+  //   //this.selectionDays= date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date);
+  //   //return this.selectionDays;
+  //   if (this.fromDate && this.toDate){
+  //   return date.equals(this.fromDate) || date.equals(this.toDate) || this.isInside(date);
+  // }
+  //  }
+
 }

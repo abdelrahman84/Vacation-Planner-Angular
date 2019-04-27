@@ -13,19 +13,24 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class VacationsListComponent implements OnInit {
   
   list: Vacation[];
+  
+ 
   constructor(private vacationService: VacationService, private firestore: AngularFirestore, private datePipe: DatePipe) { }
 
   ngOnInit() {
 
    this.vacationService.getVacations().subscribe(actionArray => {
-      this.list = actionArray.map(item => {
+      this.list = actionArray.map(item => { 
         return {
-          id: item.payload.doc.id,
-          ...item.payload.doc.data()
+        ...item.payload.doc.data()
         } as Vacation;
       })
+
+      
     });
-   
-  }
+ 
+
+}
+
 
 }

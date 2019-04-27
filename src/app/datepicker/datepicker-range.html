@@ -1,7 +1,10 @@
 
 
-<ngb-datepicker #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden">
+<ngb-datepicker [markDisabled]="isDisabled" #dp (select)="onDateSelection($event)" [displayMonths]="2" [dayTemplate]="t" outsideDays="hidden"
+>
 </ngb-datepicker>
+
+
 
 <ng-template #t let-date let-focused="focused" class="container">
   <span class="custom-day"
@@ -14,3 +17,4 @@
   </span>
 </ng-template>
 
+<p>Selected Days: {{disabeledDays|json}}</p>
