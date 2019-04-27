@@ -25,6 +25,10 @@ getAnnual(){
   return this.firestore.collection('vacationBalance').snapshotChanges();
 }
 
+getDisabeledDates(){
+  return this.firestore.collection('disabeledDays').snapshotChanges();
+}
+
 }
 
 

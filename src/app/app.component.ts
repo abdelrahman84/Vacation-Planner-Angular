@@ -103,7 +103,6 @@ export class AppComponent {
     this.endDate = $event;
   }
 
- 
 
   decrement(){
     if (this.selectedVacationType=="Annual"){
@@ -120,6 +119,9 @@ export class AppComponent {
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
 
       this.getVacations();
+
+      this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify(this.startDate)));
+      this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify(this.endDate)));
      
     }
     else if (this.selectedVacationType=="Casual"){
@@ -134,9 +136,12 @@ export class AppComponent {
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Casual: this.CasualBalance});
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
 
+
       this.getVacations();
+
+      this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify(this.startDate)));
+      this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify(this.endDate)));
      
-    
     }
 
       else {alert('Please Submit All Fields')
@@ -145,7 +150,6 @@ export class AppComponent {
      
   } 
 
-  
 
 }
 

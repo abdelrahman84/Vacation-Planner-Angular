@@ -1,6 +1,8 @@
 import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NgbDate, NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from '@angular/compiler/src/util';
+import { AngularFirestore } from '@angular/fire/firestore';
+import {VacationService} from '../_services/vacation.service';
 
 @Component({
   selector: 'ngbd-datepicker-range',
@@ -44,17 +46,29 @@ export class NgbdDatepickerRange {
 
   @Output() EndDateEvent = new EventEmitter();
 
-  constructor(calendar: NgbCalendar) {
+  constructor(private firestore: AngularFirestore, private vacationService: VacationService, calendar: NgbCalendar) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 1);      
-    this.DiffDate=this.calcDaysDiff();     
+    this.DiffDate=this.calcDaysDiff();      
   }
+
+  ngOnInit() {
+
+    this.vacationService.getDisabeledDates().subscribe(actionArray => {
+       this.disabledDates = actionArray.map(item => { 
+         return {
+         ...item.payload.doc.data()
+         } as NgbDateStruct;
+       })
+       
+     });
+  
+ }
 
   isDisabled = (date: NgbDateStruct, current: {month: number, year: number})=> {
     return this.disabledDates.find(x => NgbDate.from(x).equals(date))? true: false;
   }
 
- 
   onDateSelection(date: NgbDate) {
     console.log('onDateSelection:', date);
     if (!this.fromDate && !this.toDate) {
@@ -68,7 +82,7 @@ export class NgbdDatepickerRange {
       this.DiffDate = this.calcDaysDiff();
       this.EndDateEvent.emit(date);
 
-      this.disabledDates.push(date);
+      //this.disabledDates.push(date);
       
       
     } else {
@@ -77,7 +91,9 @@ export class NgbdDatepickerRange {
 
       this.FromDateEvent.emit(date);
 
-      this.disabledDates.push(date);
+      //this.disabledDates.push(date);
+
+      //this.firestore.collection('SelectedDays').add(JSON.parse(JSON.stringify(date)));
     }
   }
  
