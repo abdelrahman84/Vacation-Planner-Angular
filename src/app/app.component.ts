@@ -47,10 +47,9 @@ export class AppComponent {
   }
   title = 'VacationPlannerAngular';
   
-
   annualVacation=15;
   CasualBalance=6;
-  vacationBalance= this.annualVacation+ this.CasualBalance;
+  vacationBalance= 21;
   public show:boolean = false;
   public buttonName:any = 'Show';
   public selectedVacationType;
@@ -62,8 +61,6 @@ export class AppComponent {
   startDate = this.calendar.getToday();
   endDate= this.calendar.getNext(this.calendar.getToday(), 'd', 1); 
   
-
-
   options = [
     { name: "Annual", value: 1 },
     { name: "Casual", value: 2 }
@@ -71,7 +68,6 @@ export class AppComponent {
 
   ngOnInit () { 
 
-     
     this.getVacations();
     
 }
