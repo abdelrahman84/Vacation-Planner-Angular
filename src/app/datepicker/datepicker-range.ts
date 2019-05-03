@@ -26,6 +26,14 @@ import {VacationService} from '../_services/vacation.service';
     .custom-day.faded {
       background-color: rgba(2, 117, 216, 0.5);
     }
+    .custom-day.disabled{
+      color: rgb(192,192,192);
+      hover.text: "date already selected";
+    }
+    .tooltiptext {
+      visibility: hidden;
+    } 
+
     
   `]
 })
@@ -38,6 +46,8 @@ export class NgbdDatepickerRange {
   startDate;
   endDate;
   disabledDates: NgbDateStruct[] = new Array();
+  inside:  NgbDateStruct[] = new Array();
+  
   
 
   @Output() dateDifferenceEvent  = new EventEmitter();
@@ -49,7 +59,8 @@ export class NgbdDatepickerRange {
   constructor(private firestore: AngularFirestore, private vacationService: VacationService, calendar: NgbCalendar) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 1);      
-    this.DiffDate=this.calcDaysDiff();      
+    this.DiffDate=this.calcDaysDiff();   
+   
   }
 
   ngOnInit() {
@@ -62,7 +73,7 @@ export class NgbdDatepickerRange {
        })
        
      });
-  
+
  }
 
   isDisabled = (date: NgbDateStruct, current: {month: number, year: number})=> {
@@ -76,25 +87,21 @@ export class NgbdDatepickerRange {
       this.DiffDate = this.calcDaysDiff();
       this.FromDateEvent.emit(date);
       
-
+  
     } else if (this.fromDate && !this.toDate && date.after(this.fromDate)) {
       this.toDate = date;
       this.DiffDate = this.calcDaysDiff();
-      this.EndDateEvent.emit(date);
+      this.EndDateEvent.emit(date);  
+    
 
-      //this.disabledDates.push(date);
-      
-      
-    } else {
+    
+    } 
+    else {
       this.toDate = null;
       this.fromDate = date;
-
       this.FromDateEvent.emit(date);
-
-      //this.disabledDates.push(date);
-
-      //this.firestore.collection('SelectedDays').add(JSON.parse(JSON.stringify(date)));
-    }
+      
+    } 
   }
  
   private createDateFromNgbDate(ngbDate: NgbDate): Date {
@@ -113,11 +120,13 @@ export class NgbdDatepickerRange {
   }
 
   isHovered(date: NgbDate) {
+    
     return this.fromDate && !this.toDate && this.hoveredDate && date.after(this.fromDate) && date.before(this.hoveredDate);
   }
 
   isInside(date: NgbDate) {
     return date.after(this.fromDate) && date.before(this.toDate);
+    
   }
 
   isRange(date: NgbDate) {

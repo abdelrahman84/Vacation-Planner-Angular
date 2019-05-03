@@ -1,6 +1,6 @@
     import { Component, OnInit} from '@angular/core';
     import {FormControl} from '@angular/forms';
-    import {NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+    import {NgbDate, NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
     import { Vacation } from './vacation.model';
     import { RouterModule, Routes } from '@angular/router';
     import { Router } from '@angular/router';
@@ -60,6 +60,7 @@ export class AppComponent {
   VacationRef;
   startDate = this.calendar.getToday();
   endDate= this.calendar.getNext(this.calendar.getToday(), 'd', 1); 
+  insideDates;
   
   options = [
     { name: "Annual", value: 1 },
@@ -100,6 +101,21 @@ export class AppComponent {
   }
 
 
+  getDates(start: NgbDate, end: NgbDate) {
+    
+    var inside = [];
+    var currentDate = start;
+
+    while (currentDate.before(end) || currentDate.equals(end)) {
+      inside.push(currentDate);
+      currentDate = this.calendar.getNext(currentDate,'d',1);
+    }
+    return inside;
+  }
+
+  
+
+
   decrement(){
     if (this.selectedVacationType=="Annual"){
       this.annualVacation=this.annualVacation-this.DiffDate;
@@ -114,10 +130,14 @@ export class AppComponent {
 
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
 
+      this.insideDates = this.getDates(this.startDate, this.endDate);
+
       this.getVacations();
 
-      this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify(this.startDate)));
-      this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify(this.endDate)));
+    
+      for (let i in this.insideDates) {
+        this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify((this.insideDates[i]))));
+      }
      
     }
     else if (this.selectedVacationType=="Casual"){
@@ -133,10 +153,13 @@ export class AppComponent {
       this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
 
 
+      this.insideDates = this.getDates(this.startDate, this.endDate);
+
       this.getVacations();
 
-      this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify(this.startDate)));
-      this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify(this.endDate)));
+      for (let i in this.insideDates) {
+        this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify((this.insideDates[i]))));
+      }
      
     }
 
