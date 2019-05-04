@@ -1,4 +1,16 @@
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;" *ngIf="currentUser">
+<!-- User logged in -->
+
+
+
+<div *ngIf="auth.user$ | async; then authenticated else guest">
+  
+</div>
+
+<ng-template #authenticated>
+
+ <div  *ngIf="auth.user$ | async as user">
+
+<nav class="navbar navbar-light" style="background-color: #e3f2fd;" >
 
     <div class="d-flex flex-column">
 
@@ -11,9 +23,9 @@
       </button>
 
       <a class="nav-item nav-link" routerLink="/">Home</a>
-      <div class="h-100 mx-auto"><span class="navbar-text">Welcome {{currentUser.firstName}}</span> </div>
+      <div class="h-100 mx-auto"><span class="navbar-text">Welcome {{user.displayName}}</span> </div>
       
-      <a class="nav-item nav-link float-right" (click)="logout()">Logout</a>
+      <a class="nav-item nav-link float-right" (click)="auth.signOut()">Logout</a>
 
     </div>
 
@@ -29,11 +41,44 @@
           </div> 
 
 
-
   </div> 
         
- 
 </nav>
+
+<div class="container-fluid">
+<h1>Current Vacations: {{VacationRef?.TotalVacations}}</h1>
+<h3>Annual Vacations: {{VacationRef?.Annual}}</h3>
+<h3>Casual Vacations:{{VacationRef?.Casual}}</h3>
+  
+
+<button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
+
+</div>
+
+</div>
+
+</ng-template>
+
+
+
+
+<!-- User NOT logged in -->
+<ng-template #guest>
+
+<div class="jumbotron">
+
+  <h1 class="display-4 text-center">Welcome to Team Vacation Planner</h1>
+  
+  <h6>Login to continue</h6>
+  
+  <button (click)="auth.googleSignin()" class="btn btn-primary">
+  Google Account
+  </button>
+
+</div>
+
+</ng-template>
+
 
 
     
@@ -49,12 +94,6 @@
 
 <div id="document">
     
-  <h1>Current Vacations: {{VacationRef?.TotalVacations}}</h1>
-  <h3>Annual Vacations: {{VacationRef?.Annual}}</h3>
-  <h3>Casual Vacations:{{VacationRef?.Casual}}</h3>
-  
-
-  <button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
 
  
   <ng-container *ngIf="show">

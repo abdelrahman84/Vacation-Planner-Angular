@@ -10,6 +10,7 @@
     import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
     import { AngularFirestore } from '@angular/fire/firestore';
     import { DatePipe } from '@angular/common';
+    import { AuthService } from './_services/auth.service';
 
     
 
@@ -31,7 +32,8 @@ export class AppComponent {
   date: {year: number, month: number};
 
   constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService, 
-    private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe
+    private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe,
+    public auth: AuthService
     ) {
 
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
@@ -49,7 +51,7 @@ export class AppComponent {
   
   annualVacation=15;
   CasualBalance=6;
-  vacationBalance= 21;
+  vacationBalance= this.annualVacation-this.CasualBalance;
   public show:boolean = false;
   public buttonName:any = 'Show';
   public selectedVacationType;
@@ -82,7 +84,7 @@ export class AppComponent {
    }
 
    getVacations(){
-    this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').get().subscribe(value => {
+    this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').get().subscribe(value => {
       const data = value.data();
       this.VacationRef = data;
     });
@@ -113,8 +115,6 @@ export class AppComponent {
     return inside;
   }
 
-  
-
 
   decrement(){
     if (this.selectedVacationType=="Annual"){
@@ -126,9 +126,9 @@ export class AppComponent {
       fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)};
       this.firestore.collection('vacations').add(this.vacation);
 
-      this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Annual: this.annualVacation});
+      this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').update({Annual: this.annualVacation});
 
-      this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
+      this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').update({TotalVacations: this.vacationBalance});
 
       this.insideDates = this.getDates(this.startDate, this.endDate);
 
@@ -149,8 +149,8 @@ export class AppComponent {
       fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)};
       this.firestore.collection('vacations').add(this.vacation);
 
-      this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Casual: this.CasualBalance});
-      this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
+      this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').update({Casual: this.CasualBalance});
+      this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').update({TotalVacations: this.vacationBalance});
 
 
       this.insideDates = this.getDates(this.startDate, this.endDate);
