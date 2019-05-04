@@ -3,7 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import {Vacation} from '../vacation.model';
 import { reject } from 'q';
-
+import { map }from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +18,16 @@ export class VacationService {
 vacation: Vacation;
 
 getVacations(){
-  return this.firestore.collection('vacations').snapshotChanges();
+  // return this.firestore.collection('vacations').snapshotChanges();
+
+  return this.firestore.collection('vacations').snapshotChanges().pipe(
+    map(actions => actions.map(a => {
+      const data = a.payload.doc.data();
+      const deleteVacation = ()=>{a.payload.doc.ref.delete()};
+      const id = a.payload.doc.id;
+      return { id, ...data, deleteVacation };
+    }))
+  );
 }
 
 getAnnual(){

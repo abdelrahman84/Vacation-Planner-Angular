@@ -56,28 +56,41 @@ export class NgbdDatepickerRange {
 
   @Output() EndDateEvent = new EventEmitter();
 
-  constructor(private firestore: AngularFirestore, private vacationService: VacationService, calendar: NgbCalendar) {
+  constructor(private firestore: AngularFirestore, private vacationService: VacationService, private calendar: NgbCalendar) {
     this.fromDate = calendar.getToday();
     this.toDate = calendar.getNext(calendar.getToday(), 'd', 1);      
     this.DiffDate=this.calcDaysDiff();   
    
   }
 
-  ngOnInit() {
+  getInsideDates(start: NgbDate, end: NgbDate) {
 
-    this.vacationService.getDisabeledDates().subscribe(actionArray => {
-       this.disabledDates = actionArray.map(item => { 
-         return {
-         ...item.payload.doc.data()
-         } as NgbDateStruct;
-       })
-       
+    var inside = [];
+    var currentDate = start;
+
+    while (currentDate.before(end) || currentDate.equals(end)) {
+      inside.push(currentDate);
+      currentDate = this.calendar.getNext(currentDate,'d',1);
+    }
+    return inside;
+  }
+  ngOnInit() {
+    // no need for a different collection to track disabled days, better to calculate them, so you dont need
+    //to keep track of them and updating everywhere
+    this.vacationService.getVacations().subscribe(vacations => {
+      
+       for(var v of vacations){
+        var from = NgbDate.from(JSON.parse(v.fromDate));
+        var to = NgbDate.from(JSON.parse(v.endDate));
+        var insideDates = this.getInsideDates(from,to);
+        this.disabledDates = this.disabledDates.concat(insideDates); //add them all to one array
+       }
      });
 
  }
 
   isDisabled = (date: NgbDateStruct, current: {month: number, year: number})=> {
-    return this.disabledDates.find(x => NgbDate.from(x).equals(date))? true: false;
+    return this.disabledDates.find(x => x.equals(date))? true: false;
   }
 
   onDateSelection(date: NgbDate) {

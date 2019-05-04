@@ -20,13 +20,10 @@ export class VacationsListComponent implements OnInit {
   ngOnInit() {
 
    this.vacationService.getVacations().subscribe(actionArray => {
-      this.list = actionArray.map(item => { 
-        return {
-        ...item.payload.doc.data()
-        } as Vacation;
-      })
+     
+      // this.list = Array.from(actionArray);
+      this.list = actionArray;
 
-      
     });
  
 
