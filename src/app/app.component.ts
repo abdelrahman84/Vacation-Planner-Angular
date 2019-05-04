@@ -130,16 +130,25 @@ export class AppComponent {
 
 
   decrement() {
+
+    this.vacation = {
+      NoOfDays: this.DiffDate, vacationType: this.selectedVacationType, SubmissionDate: this.dateNow,
+      fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)
+    };
+    this.firestore.collection('vacations').add(this.vacation);
+
+    // no need for the if/else
+    
     if (this.selectedVacationType == "Annual") {
-      this.annualVacation -= this.DiffDate;
+      // this.annualVacation -= this.DiffDate;
       alert('Annaul Vacation Submitted')
       // this.vacationBalance=this.annualVacation+this.CasualBalance;
 
-      this.vacation = {
-        NoOfDays: this.DiffDate, vacationType: this.selectedVacationType, SubmissionDate: this.dateNow,
-        fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)
-      };
-      this.firestore.collection('vacations').add(this.vacation);
+      // this.vacation = {
+      //   NoOfDays: this.DiffDate, vacationType: this.selectedVacationType, SubmissionDate: this.dateNow,
+      //   fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)
+      // };
+      // this.firestore.collection('vacations').add(this.vacation);
 
       // now you dont need to update those
       // this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Annual: this.annualVacation});
@@ -148,7 +157,7 @@ export class AppComponent {
 
       // this.insideDates = this.getDates(this.startDate, this.endDate);
 
-      this.getVacations();
+      // this.getVacations();
 
 
       // for (let i in this.insideDates) {
@@ -157,15 +166,15 @@ export class AppComponent {
 
     }
     else if (this.selectedVacationType == "Casual") {
-      this.CasualBalance = this.CasualBalance - this.DiffDate;
+      // this.CasualBalance = this.CasualBalance - this.DiffDate;
       alert('Casual Vacation Submitted')
       // this.vacationBalance=this.annualVacation+this.CasualBalance;
 
-      this.vacation = {
-        NoOfDays: this.DiffDate, vacationType: this.selectedVacationType, SubmissionDate: this.dateNow,
-        fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)
-      };
-      this.firestore.collection('vacations').add(this.vacation);
+      // this.vacation = {
+      //   NoOfDays: this.DiffDate, vacationType: this.selectedVacationType, SubmissionDate: this.dateNow,
+      //   fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)
+      // };
+      // this.firestore.collection('vacations').add(this.vacation);
 
       // this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({Casual: this.CasualBalance});
       // this.firestore.collection('vacationBalance').doc('B2TKfIoz1jrJJ954jZ9z').update({TotalVacations: this.vacationBalance});
@@ -173,7 +182,7 @@ export class AppComponent {
 
       // this.insideDates = this.getDates(this.startDate, this.endDate);
 
-      this.getVacations();
+      // this.getVacations();
       //now we don't need to update disabled days anymore
       // for (let i in this.insideDates) {
       //   this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify((this.insideDates[i]))));
