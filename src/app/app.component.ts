@@ -58,7 +58,7 @@ export class AppComponent {
   dateNow: Date = new Date();
   vacation: Vacation;
   vacations = [];
-  VacationRef = {};
+  VacationRef = {Annual:0,Casual:0,TotalVacations:0};
   startDate = this.calendar.getToday();
   endDate = this.calendar.getNext(this.calendar.getToday(), 'd', 1);
   insideDates;

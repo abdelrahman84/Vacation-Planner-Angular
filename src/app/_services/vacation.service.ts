@@ -22,7 +22,7 @@ getVacations(){
 
   return this.firestore.collection('vacations').snapshotChanges().pipe(
     map(actions => actions.map(a => {
-      const data = a.payload.doc.data();
+      const data : Vacation = Object.assign(new Vacation,a.payload.doc.data());
       const deleteVacation = ()=>{a.payload.doc.ref.delete()};
       const id = a.payload.doc.id;
       return { id, ...data, deleteVacation };

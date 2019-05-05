@@ -12,14 +12,14 @@
 
 <nav class="navbar navbar-light" style="background-color: #e3f2fd;" >
 
-  <div class="d-flex flex-column">
+    <div class="d-flex flex-column">
 
+        
+   <div class = "d-flex flex-row justify-content-between" style="width: 1300px;">
 
-    <div class="d-flex flex-row justify-content-between" style="width: 1300px;">
-
-      <button class="navbar-toggler" [attr.aria-expanded]="!isCollapsed" type="button" aria-controls="collapseExample"
-        (click)="isCollapsed = !isCollapsed">
-        <span class="navbar-toggler-icon"></span>
+   <button class="navbar-toggler" [attr.aria-expanded]="!isCollapsed" type="button"  aria-controls="collapseExample" 
+  (click)="isCollapsed = !isCollapsed">
+     <span class="navbar-toggler-icon"></span>
       </button>
 
       <a class="nav-item nav-link" routerLink="/">Home</a>
@@ -31,11 +31,15 @@
 
 
     <div>
-      <div id="collapseExample" [ngbCollapse]="isCollapsed" class="collapse">
-        <ul class="ist-group ml-10 nav-ul">
-          <a class="nav-item nav-link" routerLink="/vacations">Submitted Vacations</a>
+        <div id="collapseExample" [ngbCollapse]="isCollapsed" class="collapse">  
+          <ul class="ist-group ml-10 nav-ul">
+            <a class="nav-item nav-link" routerLink="/vacations">Submitted Vacations</a> 
+         
+          </ul>
+    
+      </div>
+          </div> 
 
-        </ul>
 
   </div> 
         
@@ -77,46 +81,42 @@
 
 
 
-  </div>
+    
 
 
-</nav>
 <div class="container-fluid">
-  <alert></alert>
-
-  <router-outlet></router-outlet>
+              <alert></alert>
+            
+              <router-outlet></router-outlet>
 
 </div>
-
+        
 
 <div id="document">
     
 
-  <button (click)="toggle()" id="bt" class="btn-primary">{{show? 'cancel':'Submit a new Vacation'}}</button>
-
-
+ 
   <ng-container *ngIf="show">
-    <form class="form-horizontal">
-
-      <div style="width: 50%;">
+  <form class="form-horizontal">
+  
+    <div style="width: 50%;">
         <label>Select Vacation Type</label>
         <br>
         <select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
-          <option *ngFor="let o of options">
-            {{o.name}}
-          </option>
-        </select>
-        <br>
-
-        <ngbd-datepicker-range (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)"
-          (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range>
-
-      </div>
-      <br>
-
-
-    </form>
-    <button (click)="decrement()" class="btn-success">Confirm</button>
-
+               <option *ngFor="let o of options">
+                 {{o.name}}
+               </option>
+              </select>
+              <br>
+  
+        <ngbd-datepicker-range (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)" (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range>  
+          
+    </div>
+    <br>
+   
+    
+  </form>
+  <button (click)="decrement()" class="btn-success">Confirm</button>
+  
   </ng-container>
-</div>
+  </div>

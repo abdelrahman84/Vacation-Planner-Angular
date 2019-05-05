@@ -90,7 +90,7 @@ export class NgbdDatepickerRange {
  }
 
   isDisabled = (date: NgbDateStruct, current: {month: number, year: number})=> {
-    return this.disabledDates.find(x => x.equals(date))? true: false;
+    return this.disabledDates.find(x => NgbDate.from(x).equals(date))? true: false;
   }
 
   onDateSelection(date: NgbDate) {
