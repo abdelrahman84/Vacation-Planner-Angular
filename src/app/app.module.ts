@@ -25,18 +25,20 @@ import { VacationsListComponent } from './vacations-list/vacations-list.componen
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import {Vacation} from './vacation.model';
+import { AngularFireAuthModule } from '@angular/fire/auth';
+import { UserProfileComponent } from './user-profile/user-profile.component';
   
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, AlertComponent, UserComponent, HomeComponent, LoginComponent, RegisterComponent, VacationsListComponent  
+    AppComponent, NgbdDatepickerRange, AlertComponent, UserComponent, HomeComponent, LoginComponent, RegisterComponent, VacationsListComponent, UserProfileComponent  
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule, BrowserAnimationsModule,
     MatDatepickerModule, MatInputModule,MatNativeDateModule, AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule,
+    AngularFirestoreModule, AngularFireAuthModule
   ],
   providers: [NgbdDatepickerRange,{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },

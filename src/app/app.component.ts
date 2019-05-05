@@ -1,16 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { NgbDate, NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { Vacation } from './vacation.model';
-import { RouterModule, Routes } from '@angular/router';
-import { Router } from '@angular/router';
-import { AuthenticationService } from './_services';
-import { User } from './_models';
-import { VacationService } from './_services/vacation.service';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
-import { AngularFirestore } from '@angular/fire/firestore';
-import { DatePipe } from '@angular/common';
-
+    import { Component, OnInit} from '@angular/core';
+    import {FormControl} from '@angular/forms';
+    import {NgbDate, NgbDateStruct, NgbCalendar} from '@ng-bootstrap/ng-bootstrap';
+    import { Vacation } from './vacation.model';
+    import { RouterModule, Routes } from '@angular/router';
+    import { Router } from '@angular/router';
+    import { AuthenticationService } from './_services';
+    import { User } from './_models';
+    import {VacationService} from './_services/vacation.service';
+    import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
+    import { AngularFirestore } from '@angular/fire/firestore';
+    import { DatePipe } from '@angular/common';
+    import { AuthService } from './_services/auth.service';
 
 
 @Component({
@@ -30,9 +30,10 @@ export class AppComponent {
   model: NgbDateStruct;
   date: { year: number, month: number };
 
-  constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService,
-    private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe
-  ) {
+  constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService, 
+    private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe,
+    public auth: AuthService
+    ) {
 
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
@@ -46,12 +47,12 @@ export class AppComponent {
     this.model = this.calendar.getToday();
   }
   title = 'VacationPlannerAngular';
-
-  annualVacation = 15;
-  CasualBalance = 6;
-  vacationBalance = 21;
-  public show: boolean = false;
-  public buttonName: any = 'Show';
+  
+  annualVacation=15;
+  CasualBalance=6;
+  vacationBalance= this.annualVacation-this.CasualBalance;
+  public show:boolean = false;
+  public buttonName:any = 'Show';
   public selectedVacationType;
   DiffDate = 1;
   dateNow: Date = new Date();
@@ -125,7 +126,6 @@ export class AppComponent {
   //   }
   //   return inside;
   // }
-
 
 
 
