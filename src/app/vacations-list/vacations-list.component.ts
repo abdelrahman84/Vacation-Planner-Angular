@@ -5,6 +5,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 
+
 @Component({
   selector: 'app-vacations-list',
   templateUrl: './vacations-list.component.html',
@@ -26,11 +27,6 @@ export class VacationsListComponent implements OnInit {
         } as Vacation;
       })
 
-      
     });
- 
-
 }
-
-
 }

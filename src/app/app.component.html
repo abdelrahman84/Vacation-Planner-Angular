@@ -46,9 +46,9 @@
 </nav>
 
 <div class="container-fluid">
-<h1>Current Vacations: {{VacationRef?.TotalVacations}}</h1>
-<h3>Annual Vacations: {{VacationRef?.Annual}}</h3>
-<h3>Casual Vacations:{{VacationRef?.Casual}}</h3>
+<h1>Current Vacations: {{userDoc.TotalBalance}}</h1>
+<h3>Annual Vacations: {{userDoc.AnnualBalance}}</h3>
+<h3>Casual Vacations:{{userDoc.CasualBalance}}</h3>
   
 
 <button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
@@ -71,7 +71,7 @@
   
   <h6>Login to continue</h6>
   
-  <button (click)="auth.googleSignin()" class="btn btn-primary">
+  <button (click)="auth.googleLogin()" class="btn btn-primary">
   Google Account
   </button>
 

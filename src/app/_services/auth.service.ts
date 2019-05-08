@@ -4,7 +4,6 @@ import { User } from '../user.model';
 import { auth } from 'firebase/app';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
-
 import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 
@@ -14,6 +13,7 @@ import { switchMap } from 'rxjs/operators';
 export class AuthService {
 
   user$: Observable<User>;
+  userDoc;
 
   constructor(
         private afAuth: AngularFireAuth,
@@ -32,30 +32,66 @@ export class AuthService {
         }
       })
     )
+
+    this.getCurrentUser().then((userID: string) => {
+      //here you can use the id to get the users firestore doc 
+      this.afs.collection('users').doc(userID).valueChanges()
+      .subscribe(userFirestoreDoc => { // remember to subscribe
+        this.userDoc = userFirestoreDoc;
+      })
+    }).catch(nullID => {
+      //when there is not a current user
+      this.userDoc = null
+    }) 
+
   }
 
-  async googleSignin() {
-    const provider = new auth.GoogleAuthProvider();
-    const credential = await this.afAuth.auth.signInWithPopup(provider);
-    return this.updateUserData(credential.user);
+
+  googleLogin() {
+    const provider = new auth.GoogleAuthProvider()
+    return this.oAuthLogin(provider);
+  }
+
+  private oAuthLogin(provider) {
+    return this.afAuth.auth.signInWithPopup(provider)
+      .then((credential) => {
+        this.updateUserData(credential.user)
+      })
   }
 
   private updateUserData(user) {
     // Sets user data to firestore on login
     const userRef: AngularFirestoreDocument<User> = this.afs.doc(`users/${user.uid}`);
 
-    const data = { 
+    var data = { 
       uid: user.uid, 
       email: user.email, 
       displayName: user.displayName, 
-      photoURL: user.photoURL
+      photoURL: user.photoURL,
+      TotalBalance: 21,
+      AnnualBalance: 15,
+      CasualBalance: 6
     } 
-    return userRef.set(data, { merge: true })
-
+    if (!this.userDoc) 
+    { return userRef.set(data, { merge: true }) }
   }
 
   async signOut() {
     await this.afAuth.auth.signOut();
     this.router.navigate(['/']);
   }
+
+  getCurrentUser(): Promise<string> {
+    var promise = new Promise<string>((resolve, reject) => {
+      this.afAuth.auth.onAuthStateChanged(returnedUser => {
+        if (returnedUser) {
+          resolve(returnedUser.uid);
+        } else {
+          reject(null);
+        }
+      });
+    })
+    return promise
+  }
+   
 }

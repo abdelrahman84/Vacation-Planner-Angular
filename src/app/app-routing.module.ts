@@ -10,6 +10,7 @@ import {VacationsListComponent} from './vacations-list/vacations-list.component'
 
 
 
+
 const routes: Routes = [
   {path: 'user', component:UserComponent, pathMatch:'full'},
   { path: 'login', component: LoginComponent },

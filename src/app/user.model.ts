@@ -4,4 +4,7 @@ export interface User {
   photoURL?: string;
   displayName?: string;
   myCustomData?: string;
+  TotalBalance: number;
+  AnnualBalance: number;
+  CasualBalance: number;
 }

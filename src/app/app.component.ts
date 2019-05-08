@@ -5,13 +5,17 @@
     import { RouterModule, Routes } from '@angular/router';
     import { Router } from '@angular/router';
     import { AuthenticationService } from './_services';
-    import { User } from './_models';
+    import { User } from './user.model';
+    import {UserProfileComponent } from './user-profile/user-profile.component'
     import {VacationService} from './_services/vacation.service';
     import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
     import { AngularFirestore } from '@angular/fire/firestore';
     import { DatePipe } from '@angular/common';
     import { AuthService } from './_services/auth.service';
-
+    import { firestore } from 'firebase';
+    import { auth } from 'firebase/app';
+    import { Observable, of } from 'rxjs';
+    import { AngularFireAuth } from '@angular/fire/auth';
     
 
 @Component({
@@ -26,23 +30,16 @@ export class AppComponent {
 
   public isCollapsed = false;
 
-  currentUser: User;
   
   model: NgbDateStruct;
   date: {year: number, month: number};
 
   constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService, 
     private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe,
-    public auth: AuthService
+    public auth: AuthService, private afAuth: AngularFireAuth
     ) {
 
-    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
   }
-
-  logout() {
-    this.authenticationService.logout();
-    this.router.navigate(['/login']);
-}
 
   selectToday() {
     this.model = this.calendar.getToday();
@@ -51,7 +48,7 @@ export class AppComponent {
   
   annualVacation=15;
   CasualBalance=6;
-  vacationBalance= this.annualVacation-this.CasualBalance;
+  vacationBalance= 21;
   public show:boolean = false;
   public buttonName:any = 'Show';
   public selectedVacationType;
@@ -63,6 +60,9 @@ export class AppComponent {
   startDate = this.calendar.getToday();
   endDate= this.calendar.getNext(this.calendar.getToday(), 'd', 1); 
   insideDates;
+  userDoc;
+  
+ 
   
   options = [
     { name: "Annual", value: 1 },
@@ -71,9 +71,20 @@ export class AppComponent {
 
   ngOnInit () { 
 
-    this.getVacations();
-    
-}
+    //this.getVacations();
+
+    this.auth.getCurrentUser().then((userID: string) => {
+      //here you can use the id to get the users firestore doc 
+      this.firestore.collection('users').doc(userID).valueChanges()
+      .subscribe(userFirestoreDoc => { // remember to subscribe
+        this.userDoc = userFirestoreDoc;
+      })
+    }).catch(nullID => {
+      //when there is not a current user
+      this.userDoc = null
+    }) 
+  
+     }
 
   transformDate(date) {
     this.datePipe.transform(date, 'yyyy-MM-dd'); 
@@ -83,12 +94,13 @@ export class AppComponent {
     this.show = !this.show;
    }
 
-   getVacations(){
-    this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').get().subscribe(value => {
-      const data = value.data();
-      this.VacationRef = data;
-    });
-   }
+   //getVacations(){
+    //this.firestore.collection('users').doc('9AS5XoeulDC6KVln5Ohd').get().subscribe(value => {
+      //const data = value.data();
+      //this.VacationRef = data;
+    //});
+   //}
+
 
    setDifference($event) {
     this.DiffDate = $event; 
@@ -124,38 +136,41 @@ export class AppComponent {
       
       this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow,
       fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)};
-      this.firestore.collection('vacations').add(this.vacation);
 
-      this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').update({Annual: this.annualVacation});
+      this.firestore.collection('users').doc(this.userDoc.uid).collection('vacations').add(this.vacation);
 
-      this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').update({TotalVacations: this.vacationBalance});
+      this.firestore.collection('users').doc(this.userDoc.uid).update({AnnualBalance: this.annualVacation});
 
+      this.firestore.collection('users').doc(this.userDoc.uid).update({TotalBalance: this.vacationBalance});
+      
+      
       this.insideDates = this.getDates(this.startDate, this.endDate);
 
-      this.getVacations();
+     
 
     
       for (let i in this.insideDates) {
         this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify((this.insideDates[i]))));
       }
      
-    }
-    else if (this.selectedVacationType=="Casual"){
-  this.CasualBalance=this.CasualBalance-this.DiffDate;
+     }
+      else if (this.selectedVacationType=="Casual"){
+      this.CasualBalance=this.CasualBalance-this.DiffDate;
       alert('Casual Vacation Submitted')
       this.vacationBalance=this.annualVacation+this.CasualBalance;
 
       this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow,
       fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)};
-      this.firestore.collection('vacations').add(this.vacation);
 
-      this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').update({Casual: this.CasualBalance});
-      this.firestore.collection('vacationBalance').doc('9AS5XoeulDC6KVln5Ohd').update({TotalVacations: this.vacationBalance});
+      this.firestore.collection('users').doc(this.userDoc.uid).collection('vacations').add(this.vacation);
 
+      this.firestore.collection('users').doc(this.userDoc.uid).update({CasualBalance: this.CasualBalance});
 
+      this.firestore.collection('users').doc(this.userDoc.uid).update({TotalBalance: this.vacationBalance});
+     
       this.insideDates = this.getDates(this.startDate, this.endDate);
 
-      this.getVacations();
+    
 
       for (let i in this.insideDates) {
         this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify((this.insideDates[i]))));
@@ -168,6 +183,7 @@ export class AppComponent {
   }
      
   } 
+
 
 
 }
