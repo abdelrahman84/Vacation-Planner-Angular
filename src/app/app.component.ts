@@ -127,7 +127,7 @@ export class AppComponent {
     return inside;
   }
 
-
+  
   decrement(){
     if (this.selectedVacationType=="Annual"){
       this.annualVacation=this.annualVacation-this.DiffDate;
