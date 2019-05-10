@@ -8,11 +8,12 @@
 
 <ng-template #authenticated>
 
- <div  *ngIf="auth.user$ | async as user">
+ <div class="container-fluid" *ngIf="auth.user$ | async as user">
 
-<nav class="navbar navbar-dark bg-dark">
 
-    <div class="d-flex flex-column">
+<nav class="navbar navbar-dark bg-dark container-fluid">
+
+  
 
         
    <div class = "d-flex flex-row justify-content-between" style="width: 1300px;">
@@ -43,9 +44,9 @@
           </div> 
 
 
-  </div> 
-        
+  
 </nav>
+
 
 <div class="container-fluid">
 <h1>Current Vacations: {{userDoc?.TotalBalance}}</h1>
