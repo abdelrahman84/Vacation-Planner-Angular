@@ -10,7 +10,7 @@
 
  <div  *ngIf="auth.user$ | async as user">
 
-<nav class="navbar navbar-light" style="background-color: #e3f2fd;" >
+<nav class="navbar navbar-dark bg-dark">
 
     <div class="d-flex flex-column">
 
@@ -22,10 +22,10 @@
      <span class="navbar-toggler-icon"></span>
       </button>
 
-      <a class="nav-item nav-link" routerLink="/">Home</a>
+     
       <div class="h-100 mx-auto"><span class="navbar-text">Welcome {{user.displayName}}</span> </div>
       
-      <a class="nav-item nav-link float-right" (click)="auth.signOut()">Logout</a>
+      <a class="nav-item nav-link float-right" (click)="auth.signOut()" style="color: #B22222;">Logout</a>
 
     </div>
 
@@ -33,7 +33,9 @@
     <div>
         <div id="collapseExample" [ngbCollapse]="isCollapsed" class="collapse">  
           <ul class="ist-group ml-10 nav-ul">
+            <a class="nav-item nav-link" routerLink="/">Home</a>
             <a class="nav-item nav-link" routerLink="/vacations">Submitted Vacations</a> 
+            
          
           </ul>
     
@@ -68,12 +70,15 @@
 <div class="jumbotron">
 
   <h1 class="display-4 text-center">Welcome to Team Vacation Planner</h1>
+
+  <br>
   
+  <div class="display-4 text-center">
   <h6>Login to continue</h6>
-  
   <button (click)="auth.googleLogin()" class="btn btn-primary">
   Google Account
   </button>
+</div>
 
 </div>
 

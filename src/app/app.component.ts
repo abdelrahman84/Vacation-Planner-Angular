@@ -28,7 +28,7 @@
 
 export class AppComponent {
 
-  public isCollapsed = false;
+  public isCollapsed = true;
 
   
   model: NgbDateStruct;
