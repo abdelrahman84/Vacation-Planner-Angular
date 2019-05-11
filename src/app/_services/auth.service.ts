@@ -73,7 +73,7 @@ export class AuthService {
         AnnualBalance: 15,
         CasualBalance: 6} 
         
-        if (this.userDoc) {
+        if (this.userDoc.TotalBalance<21) {
         var data = { 
           uid: user.uid, 
           email: user.email, 
@@ -81,14 +81,13 @@ export class AuthService {
           photoURL: user.photoURL,
           TotalBalance: this.userDoc.TotalBalance,
           AnnualBalance: this.userDoc.AnnualBalance,
-          CasualBalance: this.userDoc.CasualBalance} 
+          CasualBalance: this.userDoc.CasualBalance
+        } 
         }
 
-      if (!this.userDoc) { return userRef.set(data1, { merge: true })
-        }
-      else if (this.userDoc) {
+       if (this.userDoc.TotalBalance<21) {
         return userRef.set(data, { merge: true })
-      }  
+      }  else {return userRef.set(data1, { merge: true })}
     
   }
 
