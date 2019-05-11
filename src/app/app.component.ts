@@ -48,7 +48,7 @@ export class AppComponent {
   
   annualVacation=15;
   CasualBalance=6;
-  vacationBalance= 21;
+  vacationBalance= this.annualVacation+this.CasualBalance;
   public show:boolean = false;
   public buttonName:any = 'Show';
   public selectedVacationType;
@@ -147,8 +147,6 @@ export class AppComponent {
       this.insideDates = this.getDates(this.startDate, this.endDate);
 
      
-
-    
       for (let i in this.insideDates) {
         this.firestore.collection('disabeledDays').add(JSON.parse(JSON.stringify((this.insideDates[i]))));
       }
