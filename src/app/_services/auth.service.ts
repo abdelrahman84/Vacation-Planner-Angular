@@ -73,7 +73,7 @@ export class AuthService {
         AnnualBalance: 15,
         CasualBalance: 6} 
         
-        if (this.userDoc.TotalBalance<21) {
+        if (this.userDoc) {
         var data = { 
           uid: user.uid, 
           email: user.email, 
@@ -85,9 +85,10 @@ export class AuthService {
         } 
         }
 
-       if (this.userDoc.TotalBalance<21) {
-        return userRef.set(data, { merge: true })
-      }  else {return userRef.set(data1, { merge: true })}
+       if (!this.userDoc) {
+        return userRef.set(data1, { merge: true })
+      }  else if (this.userDoc) 
+      {return userRef.set(data, { merge: true })}
     
   }
 
