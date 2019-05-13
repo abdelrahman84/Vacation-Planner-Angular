@@ -64,7 +64,7 @@
 
 </div>
 
-<div class="container">
+<div class="container" id="dataPicker">
     <alert></alert>
   
     <router-outlet></router-outlet>
@@ -87,7 +87,11 @@
     </select>
     <br>
 
-<ngbd-datepicker-range (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)" (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range>  
+ 
+
+<ngbd-datepicker-range (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)" (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range> 
+
+
 
 </div>
 <br>

@@ -99,5 +99,7 @@ ul ul a {
      padding-top:20px;
  }
 
-
+#dataPicker{
+    max-width: 100vh;
+}
 
