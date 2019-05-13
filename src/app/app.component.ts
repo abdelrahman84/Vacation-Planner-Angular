@@ -51,6 +51,8 @@ export class AppComponent {
   vacationBalance= this.annualVacation+this.CasualBalance;
   public show:boolean = false;
   public buttonName:any = 'Show';
+  public show1:boolean = false;
+  public buttonName1:any = 'Show';
   public selectedVacationType;
   DiffDate=1;
   dateNow : Date = new Date();
@@ -93,6 +95,12 @@ export class AppComponent {
   toggle() {
     this.show = !this.show;
    }
+
+   toggle1() {
+    this.show1 = !this.show1;
+   }
+
+   
 
    //getVacations(){
     //this.firestore.collection('users').doc('9AS5XoeulDC6KVln5Ohd').get().subscribe(value => {

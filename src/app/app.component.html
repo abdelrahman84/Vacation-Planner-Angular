@@ -1,3 +1,4 @@
+
 <!-- User logged in -->
 
 
@@ -8,56 +9,99 @@
 
 <ng-template #authenticated>
 
- <div class="container-fluid" *ngIf="auth.user$ | async as user">
+ <div class="wrapper" *ngIf="auth.user$ | async as user">
+
+    <ng-container *ngIf="show1">
 
 
-<nav class="navbar navbar-dark bg-dark container-fluid">
+        <nav id="sidebar">  
+                <ul class="list-unstyled components" id="homeSubmenu">
+                  <li>
+                     <a class="nav-item nav-link" routerLink="/">Home</a>
+                 </li>
+        
+                <li>
+                  <a class="nav-item nav-link" routerLink="/vacations">Submitted Vacations</a> 
+                </li>       
+                </ul>
+              
+              </nav>
+        
+        
+          </ng-container>     
+
+
+<div id="content">
 
   
+<nav class="navbar navbar navbar-dark" id="mainNav">
 
-        
-   <div class = "d-flex flex-row justify-content-between" style="width: 1300px;">
 
-   <button class="navbar-toggler" [attr.aria-expanded]="!isCollapsed" type="button"  aria-controls="collapseExample" 
-  (click)="isCollapsed = !isCollapsed">
+   <button class="navbar-toggler"  type="button"  
+   (click)="toggle1()">
      <span class="navbar-toggler-icon"></span>
       </button>
 
      
-      <div class="h-100 mx-auto"><span class="navbar-text">Welcome {{user.displayName}}</span> </div>
+      <div class="h-100 mx-auto"><span class="navbar-text userName">Welcome {{user.displayName}}</span> </div>
       
-      <a class="nav-item nav-link float-right" (click)="auth.signOut()" style="color: #B22222;">Logout</a>
-
-    </div>
-
-
-    <div>
-        <div id="collapseExample" [ngbCollapse]="isCollapsed" class="collapse">  
-          <ul class="ist-group ml-10 nav-ul">
-            <a class="nav-item nav-link" routerLink="/">Home</a>
-            <a class="nav-item nav-link" routerLink="/vacations">Submitted Vacations</a> 
-            
-         
-          </ul>
-    
-      </div>
-          </div> 
+     <div id="logout"> <a class="nav-item nav-link"  (click)="auth.signOut()" style="color: #B22222;">Logout</a>
+     </div>
 
 
-  
+ 
 </nav>
 
 
-<div class="container-fluid">
-<h1>Current Vacations: {{userDoc?.TotalBalance}}</h1>
+<div class="container" id="vacationBalance">
+<h2>Current Vacations: {{userDoc?.TotalBalance}}</h2>
 <h3>Annual Vacations: {{userDoc?.AnnualBalance}}</h3>
 <h3>Casual Vacations:{{userDoc?.CasualBalance}}</h3>
-  
+
+<br>
 
 <button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
 
 </div>
 
+<div class="container">
+    <alert></alert>
+  
+    <router-outlet></router-outlet>
+
+</div>
+
+
+<div id="document">
+
+<ng-container *ngIf="show">
+<form class="form-horizontal">
+
+<div style="width: 50%;">
+<label>Select Vacation Type</label>
+<br>
+<select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
+     <option *ngFor="let o of options">
+       {{o.name}}
+     </option>
+    </select>
+    <br>
+
+<ngbd-datepicker-range (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)" (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range>  
+
+</div>
+<br>
+
+
+</form>
+<button (click)="decrement()" class="btn-success">Confirm</button>
+
+</ng-container>
+</div>
+
+</div>
+
+
 </div>
 
 </ng-template>
@@ -65,67 +109,29 @@
 
 
 
+
+  
 <!-- User NOT logged in -->
 <ng-template #guest>
 
-<div class="jumbotron">
-
-  <h1 class="display-4 text-center">Welcome to Team Vacation Planner</h1>
-
-  <br>
-  
-  <div class="display-4 text-center">
-  <h6>Login to continue</h6>
-  <button (click)="auth.googleLogin()" class="btn btn-primary">
-  Google Account
-  </button>
-</div>
-
-</div>
-
-</ng-template>
-
-
-
+    <div class="jumbotron">
     
-
-
-<div class="container-fluid">
-              <alert></alert>
-            
-              <router-outlet></router-outlet>
-
-</div>
-        
-
-<div id="document">
+      <h1 class="display-4 text-center">Welcome to Team Vacation Planner</h1>
     
-
- 
-  <ng-container *ngIf="show">
-  <form class="form-horizontal">
-  
-    <div style="width: 50%;">
-        <label>Select Vacation Type</label>
-        <br>
-        <select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
-               <option *ngFor="let o of options">
-                 {{o.name}}
-               </option>
-              </select>
-              <br>
-  
-        <ngbd-datepicker-range (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)" (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range>  
-          
+      <br>
+      
+      <div class="display-4 text-center">
+      <h6>Login to continue</h6>
+      <button (click)="auth.googleLogin()" class="btn btn-primary">
+      Google Account
+      </button>
     </div>
-    <br>
-   
     
-  </form>
-  <button (click)="decrement()" class="btn-success">Confirm</button>
-  
-  </ng-container>
-  </div>
+    </div>
+    
+    </ng-template>
+
+
   
   
 
