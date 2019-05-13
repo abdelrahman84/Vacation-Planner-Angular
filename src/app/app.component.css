@@ -37,7 +37,6 @@ a, a:hover, a:focus {
 #content{ 
     width: 100vw; 
     max-width:100%;
-    background-image: url("../assets/images/background-blur-clean-531880.jpg");
     height: 100vh;
      
 }
