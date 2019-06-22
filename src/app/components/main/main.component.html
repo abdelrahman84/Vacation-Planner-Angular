@@ -34,11 +34,7 @@
       </button>
 
      
-      <div class="h-100 mx-auto"><span class="navbar-text userName">Welcome {{user.displayName}}</span> </div>
-      
-     <div id="logout"> <a class="nav-item nav-link"  (click)="auth.signOut()" style="color: #B22222;">Logout</a>
-     </div>
-
+    
 
  
 </nav>
@@ -106,25 +102,6 @@
 
 
   
-<!-- User NOT logged in -->
-<ng-template #guest>
-
-    <div class="jumbotron">
-    
-      <h1 class="display-4 text-center">Welcome to Team Vacation Planner</h1>
-    
-      <br>
-      
-      <div class="display-4 text-center">
-      <h6>Login to continue</h6>
-      <button (click)="auth.googleLogin()" class="btn btn-primary">
-      Google Account
-      </button>
-    </div>
-    
-    </div>
-    
-    </ng-template>
 
 
   
