@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { NgbDate, NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
-import { Vacation } from '../.././vacation.model';
+import { Vacation } from '../../_models/vacation.model';
 import { RouterModule, Routes } from '@angular/router';
 import { Router } from '@angular/router';
-import { AuthenticationService } from '../../_services';
-import { User } from '../.././user.model';
-import { UserProfileComponent } from '../../components/user-profile/user-profile.component';
+import { AuthService } from '../../_services/auth.service';
+import { User } from '../../_models/user.model';
 import { VacationService } from '../../_services/vacation.service';
 import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angular/fire/database';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';
-import { AuthService } from '../../_services/auth.service';
 import { firestore } from 'firebase';
 import { auth } from 'firebase/app';
 import { Observable, of } from 'rxjs';
@@ -30,7 +28,7 @@ export class MainComponent {
   model: NgbDateStruct;
   date: { year: number, month: number };
 
-  constructor(private calendar: NgbCalendar, private router: Router, private authenticationService: AuthenticationService,
+  constructor(private calendar: NgbCalendar, private router: Router,
     private firestore: AngularFirestore, private vacationService: VacationService, private datePipe: DatePipe,
     public auth: AuthService, private afAuth: AngularFireAuth
   ) {
@@ -69,18 +67,6 @@ export class MainComponent {
 
   ngOnInit() {
 
-    //this.getVacations();
-
-    this.auth.getCurrentUser().then((userID: string) => {
-      //here you can use the id to get the users firestore doc 
-      this.firestore.collection('users').doc(userID).valueChanges()
-        .subscribe(userFirestoreDoc => { // remember to subscribe
-          this.userDoc = userFirestoreDoc;
-        })
-    }).catch(nullID => {
-      //when there is not a current user
-      this.userDoc = null
-    })
 
   }
 

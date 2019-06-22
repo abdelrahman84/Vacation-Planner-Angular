@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {VacationService} from '../../_services/vacation.service';
-import { Vacation } from '../../vacation.model';
+import { Vacation } from '../../_models/vacation.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';

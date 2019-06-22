@@ -8,15 +8,8 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgbdDatepickerRange } from './components/datepicker/datepicker-range'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/material';
-import { UserComponent } from './components/user/user.component'
 import { RouterModule, Routes } from '@angular/router';
 import bootstrap from "bootstrap";
-import { AlertComponent } from './alert/alert.component';
-import { HomeComponent } from './components/home/home.component';
-import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
-import { fakeBackendProvider } from './_helpers';
-import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
@@ -24,27 +17,30 @@ import {VacationService} from './_services/vacation.service';
 import { VacationsListComponent } from './components/vacations-list/vacations-list.component';
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
-import {Vacation} from './vacation.model';
+import {Vacation} from './_models/vacation.model';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { UserProfileComponent } from './components/user-profile/user-profile.component';
 import { MainComponent } from './components/main/main.component';
+import { SignInComponent } from './components/sign-in/sign-in.component';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
+import {AuthService } from './_services/auth.service';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
   
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, AlertComponent, UserComponent, HomeComponent, LoginComponent, RegisterComponent, VacationsListComponent, UserProfileComponent, MainComponent  
+    AppComponent, NgbdDatepickerRange, VacationsListComponent, MainComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, DashboardComponent  
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule, BrowserAnimationsModule,
     MatDatepickerModule, MatInputModule,MatNativeDateModule, AngularFireModule.initializeApp(environment.firebaseConfig),
-    AngularFirestoreModule, AngularFireAuthModule
+    AngularFirestoreModule, AngularFireAuthModule,
+    AppRoutingModule 
   ],
-  providers: [NgbdDatepickerRange,{ provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider, VacationService, DatePipe, Vacation
-  ],
+  providers: [NgbdDatepickerRange, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
