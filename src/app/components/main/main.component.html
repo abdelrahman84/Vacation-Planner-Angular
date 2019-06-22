@@ -1,0 +1,138 @@
+<!-- User logged in -->
+
+
+
+<div *ngIf="auth.user$ | async; then authenticated else guest">
+  
+</div>
+
+<ng-template #authenticated>
+
+ <div class="wrapper" *ngIf="auth.user$ | async as user">
+
+    <ng-container *ngIf="show1">
+
+
+        <nav id="sidebar">  
+                <ul class="list-unstyled components" id="homeSubmenu">
+                  <li>
+                     <a class="nav-item nav-link" routerLink="/">Home</a>
+                 </li>
+        
+                <li>
+                  <a class="nav-item nav-link" routerLink="/vacations">Submitted Vacations</a> 
+                </li>       
+                </ul>
+              
+              </nav>
+        
+        
+          </ng-container>     
+
+
+<div id="content">
+
+  
+<nav class="navbar-dark bg-dark" id="mainNav">
+
+
+   <button class="navbar-toggler"  type="button"  
+   (click)="toggle1()">
+     <span class="navbar-toggler-icon"></span>
+      </button>
+
+     
+      <div class="h-100 mx-auto"><span class="navbar-text userName">Welcome {{user.displayName}}</span> </div>
+      
+     <div id="logout"> <a class="nav-item nav-link"  (click)="auth.signOut()" style="color: #B22222;">Logout</a>
+     </div>
+
+
+ 
+</nav>
+
+
+<div class="container" id="vacationBalance">
+<h2>Current Vacations: {{userDoc?.TotalBalance}}</h2>
+<h3>Annual Vacations: {{userDoc?.AnnualBalance}}</h3>
+<h3>Casual Vacations:{{userDoc?.CasualBalance}}</h3>
+
+<br>
+
+<button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
+
+</div>
+
+<div class="container" id="dataPicker">
+    <alert></alert>
+  
+    <router-outlet></router-outlet>
+
+</div>
+
+
+<div id="document">
+
+<ng-container *ngIf="show">
+<form class="form-horizontal">
+
+<div style="width: 50%;">
+<label>Select Vacation Type</label>
+<br>
+<select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
+     <option *ngFor="let o of options">
+       {{o.name}}
+     </option>
+    </select>
+    <br>
+
+ 
+
+<ngbd-datepicker-range (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)" (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range> 
+
+
+
+</div>
+<br>
+
+
+</form>
+<button (click)="decrement()" class="btn-success">Confirm</button>
+
+</ng-container>
+</div>
+
+</div>
+
+
+</div>
+
+</ng-template>
+
+
+
+
+
+  
+<!-- User NOT logged in -->
+<ng-template #guest>
+
+    <div class="jumbotron">
+    
+      <h1 class="display-4 text-center">Welcome to Team Vacation Planner</h1>
+    
+      <br>
+      
+      <div class="display-4 text-center">
+      <h6>Login to continue</h6>
+      <button (click)="auth.googleLogin()" class="btn btn-primary">
+      Google Account
+      </button>
+    </div>
+    
+    </div>
+    
+    </ng-template>
+
+
+  

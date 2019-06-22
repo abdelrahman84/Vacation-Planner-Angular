@@ -2,7 +2,7 @@ import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {NgbDate, NgbCalendar, NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { stringify } from '@angular/compiler/src/util';
 import { AngularFirestore } from '@angular/fire/firestore';
-import {VacationService} from '../_services/vacation.service';
+import {VacationService} from '../../_services/vacation.service'
 
 @Component({
   selector: 'ngbd-datepicker-range',
