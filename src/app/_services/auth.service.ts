@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 
 export class AuthService {
   userData: any; // Save logged in user data
-
+  userDoc;
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
@@ -25,6 +25,19 @@ export class AuthService {
         this.userData = user;
         localStorage.setItem('user', JSON.stringify(this.userData));
         JSON.parse(localStorage.getItem('user'));
+
+        this.getCurrentUser().then((userID: string) => {
+          //here you can use the id to get the users firestore doc 
+          this.afs.collection('users').doc(userID).valueChanges()
+          .subscribe(userFirestoreDoc => { // remember to subscribe
+            this.userDoc = userFirestoreDoc;
+          })
+        }).catch(nullID => {
+          //when there is not a current user
+          this.userDoc = null
+        }) 
+      
+        
       } else {
         localStorage.setItem('user', null);
         JSON.parse(localStorage.getItem('user'));
@@ -103,18 +116,36 @@ export class AuthService {
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    const userData: User = {
+    SetUserData(user) {
+    var userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+    var userData2: User = {
       uid: user.uid,
       email: user.email,
       displayName: user.displayName,
       photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      emailVerified: user.emailVerified,
+      TotalBalance: this.userDoc.TotalBalance,
+      AnnualBalance: this.userDoc.AnnualBalance,
+      CasualBalance: this.userDoc.CasualBalance }
+
+      var userData1: User = {
+        uid: user.uid,
+        email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
+        emailVerified: user.emailVerified,
+        TotalBalance: 21,
+        AnnualBalance: 15,
+        CasualBalance: 6 
     }
-    return userRef.set(userData, {
+    if (this.userDoc) { return userRef.set(userData2, {
       merge: true
-    })
+    }) } else {
+      return userRef.set(userData1, {
+        merge: true
+      })
+    }
+
   }
 
   // Sign out 
@@ -124,5 +155,19 @@ export class AuthService {
       this.router.navigate(['sign-in']);
     })
   }
+
+  getCurrentUser(): Promise<string> {
+    var promise = new Promise<string>((resolve, reject) => {
+      this.afAuth.auth.onAuthStateChanged(returnedUser => {
+        if (returnedUser) {
+          resolve(returnedUser.uid);
+        } else {
+          reject(null);
+        }
+      });
+    })
+    return promise
+  }
+
 
 }

@@ -1,0 +1,66 @@
+
+
+
+  
+  <div id="content">
+  
+  
+  <div class="container" id="vacationBalance">
+  
+  
+  <button (click)="toggle()" id="bt" class="btn-primary">Submit a new Vacation</button>
+  
+  </div>
+  
+  <div class="container" id="dataPicker">
+      
+    
+      <router-outlet></router-outlet>
+  
+  </div>
+  
+  
+  <div id="document">
+  
+  <ng-container *ngIf="show">
+  <form class="form-horizontal">
+  
+  <div style="width: 50%;">
+  <label>Select Vacation Type</label>
+  <br>
+  <select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
+       <option *ngFor="let o of options">
+         {{o.name}}
+       </option>
+      </select>
+      <br>
+  
+   
+  
+  <ngbd-datepicker-range (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)" (dateDifferenceEvent)="setDifference($event)" class="container"></ngbd-datepicker-range> 
+  
+  
+  </div>
+  <br>
+  
+  
+  </form>
+  <button (click)="decrement()" class="btn-success">Confirm</button>
+  
+  </ng-container>
+  </div>
+  
+  </div>
+  
+  
+ 
+  
+
+  
+  
+  
+  
+  
+
+    
+  

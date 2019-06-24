@@ -6,7 +6,8 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { AuthGuard } from "./_guards/auth.guard";
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import {VacationsListComponent} from './components/vacations-list/vacations-list.component'
-import {MainComponent} from './components/main/main.component'
+import {SubmitNewVacationComponent} from './components/submit-new-vacation/submit-new-vacation.component'
+import {CurrentVacationsComponent} from './components/current-vacations/current-vacations.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { SecureInnerPagesGuard } from './_guards/secure-inner-pages.guard.ts.guard';
 const routes: Routes = [
@@ -15,7 +16,9 @@ const routes: Routes = [
 { path: 'register-user', component: SignUpComponent, canActivate: [SecureInnerPagesGuard] },
 { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
 { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [SecureInnerPagesGuard] },
-{ path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [SecureInnerPagesGuard] }
+{ path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [SecureInnerPagesGuard] },
+{ path: 'currentVacations', component: CurrentVacationsComponent, canActivate: [AuthGuard] },
+{ path: 'sumbitANewVacation', component: SubmitNewVacationComponent, canActivate: [AuthGuard] },
 ];
 
 export const routing = RouterModule.forRoot(routes);

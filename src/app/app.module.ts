@@ -19,18 +19,19 @@ import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import {Vacation} from './_models/vacation.model';
 import { AngularFireAuthModule } from '@angular/fire/auth';
-import { MainComponent } from './components/main/main.component';
 import { SignInComponent } from './components/sign-in/sign-in.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import {AuthService } from './_services/auth.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { CurrentVacationsComponent } from './components/current-vacations/current-vacations.component';
+import { SubmitNewVacationComponent } from './components/submit-new-vacation/submit-new-vacation.component';
   
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, VacationsListComponent, MainComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, DashboardComponent  
+    AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, DashboardComponent, CurrentVacationsComponent, SubmitNewVacationComponent  
   ],
   imports: [
     BrowserModule,
@@ -40,7 +41,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     AngularFirestoreModule, AngularFireAuthModule,
     AppRoutingModule 
   ],
-  providers: [NgbdDatepickerRange, AuthService],
+  providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
