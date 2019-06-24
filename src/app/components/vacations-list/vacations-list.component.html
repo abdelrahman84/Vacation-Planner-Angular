@@ -1,22 +1,77 @@
+<!-- Top navigation -->
+<nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-sm-3 col-md-2 mr-0" routerLink="/register-student">
 
-<h1>Vacations:</h1>
-<br>
-<br>
-<tbody class="table">
-  <tr>
-    <td>No of Days</td>
-    <td>Vacation Type</td>
-    <td>Sumbission Date</td>
-    <td>From Date</td>
-    <td>To Date</td>
-  </tr>
-  <tr *ngFor="let v of list">
-    <td>{{v.NoOfDays|json}}</td>
-    <td>{{v.vacationType|json}}</td>
-    <td>{{v.SubmissionDate.toDate()|date: 'dd/MM/yyyy'}}</td>
-    <td>{{v.fromDate}}</td>
-    <td>{{v.endDate}}</td>
+    <span class="dasboard-text">Dashboard</span>
+  </a>
+</nav>
+<!-- Sidebar navigation -->
+<div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/dashboard">
+              <i class="fas fa-user"></i>User Profile
+            </a>
+          </li>
 
-  </tr>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/currentVacations">Vacations Balance</a>
+          </li>
 
-</tbody>
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/sumbitANewVacation">Submit A New Vacation</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" routerLink="/vacationsList">Vacations List</a>
+          </li>
+
+          <!-- Calling SignOut() Api from AuthService -->
+          <li class="nav-item">
+            <a class="nav-link" (click)="authService.SignOut()">
+              <i class="fas fa-sign-out-alt"></i>Log out
+            </a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- Main content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="inner-adjust">
+        
+        <!-- Show user data when logged in -->
+        <div class="row" *ngIf="authService.userData as user">
+          <div class="col-md-12">
+
+            <h1>Vacations:</h1>
+            <br>
+            <br>
+            <tbody class="table">
+              <tr>
+                <td>No of Days</td>
+                <td>Vacation Type</td>
+                <td>Sumbission Date</td>
+                <td>From Date</td>
+                <td>To Date</td>
+              </tr>
+              <tr *ngFor="let v of list">
+                <td>{{v.NoOfDays|json}}</td>
+                <td>{{v.vacationType|json}}</td>
+                <td>{{v.SubmissionDate.toDate()|date: 'dd/MM/yyyy'}}</td>
+                <td>{{v.fromDate}}</td>
+                <td>{{v.endDate}}</td>
+
+              </tr>
+
+            </tbody>
+
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

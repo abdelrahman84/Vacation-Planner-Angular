@@ -12,8 +12,18 @@ import { AuthService } from '../_services/auth.service';
 export class VacationService {
 
 
-constructor(private firestore: AngularFirestore, private auth: AuthService) {
+constructor(private afs: AngularFirestore, private auth: AuthService) {
 
+  this.auth.getCurrentUser().then((userID: string) => {
+    //here you can use the id to get the users firestore doc 
+    this.afs.collection('users').doc(userID).valueChanges()
+    .subscribe(userFirestoreDoc => { // remember to subscribe
+      this.userDoc = userFirestoreDoc;
+    })
+  }).catch(nullID => {
+    //when there is not a current user
+    this.userDoc = null
+  }) 
  } // Inject AngularFireDatabase dependency in constructor
 
 vacation: Vacation;
@@ -22,18 +32,16 @@ userDoc;
 
 
 getVacations(){
-  return this.firestore.collection('users').doc(this.userDoc.uid).collection('vacations').snapshotChanges();
+  return this.afs.collection('users').doc(this.userDoc.uid).collection('vacations').snapshotChanges();
 }
 
 
 getAnnual(){
-  return this.firestore.collection('vacationBalance').snapshotChanges();
+  return this.afs.collection('vacationBalance').snapshotChanges();
 }
 
 getDisabeledDates(){
-  return this.firestore.collection('disabeledDays').snapshotChanges();
+  return this.afs.collection('disabeledDays').snapshotChanges();
 }
 
 }
-
-

@@ -19,6 +19,7 @@ const routes: Routes = [
 { path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [SecureInnerPagesGuard] },
 { path: 'currentVacations', component: CurrentVacationsComponent, canActivate: [AuthGuard] },
 { path: 'sumbitANewVacation', component: SubmitNewVacationComponent, canActivate: [AuthGuard] },
+{ path: 'vacationsList', component: VacationsListComponent, canActivate: [AuthGuard] }
 ];
 
 export const routing = RouterModule.forRoot(routes);

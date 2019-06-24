@@ -4,6 +4,7 @@ import { Vacation } from '../../_models/vacation.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
+import { AuthService } from '../../_services/auth.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class VacationsListComponent implements OnInit {
   list: Vacation[];
   
  
-  constructor(private vacationService: VacationService, private firestore: AngularFirestore, private datePipe: DatePipe) { }
+  constructor(private vacationService: VacationService, private afs: AngularFirestore, private datePipe: DatePipe, public authService: AuthService) { }
 
   ngOnInit() {
 
