@@ -58,11 +58,11 @@
                 <td>To Date</td>
               </tr>
               <tr *ngFor="let v of list">
-                <td>{{v.NoOfDays|json}}</td>
-                <td>{{v.vacationType|json}}</td>
-                <td>{{v.SubmissionDate.toDate()|date: 'dd/MM/yyyy'}}</td>
-                <td>{{v.fromDate}}</td>
-                <td>{{v.endDate}}</td>
+                <td>{{v?.NoOfDays}}</td>
+                <td>{{v?.vacationType|json}}</td>
+                <td>{{v?.SubmissionDate.toDate()|date: 'dd/MM/yyyy'}}</td>
+                <td>{{v?.fromDate|json}}</td>
+                <td>{{v?.endDate}}</td>
 
               </tr>
 

@@ -12,7 +12,7 @@ import { AuthService } from '../_services/auth.service';
 export class VacationService {
 
 
-constructor(private afs: AngularFirestore, private auth: AuthService) {
+constructor(public afs: AngularFirestore, public auth: AuthService) {
 
   this.auth.getCurrentUser().then((userID: string) => {
     //here you can use the id to get the users firestore doc 

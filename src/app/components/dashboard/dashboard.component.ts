@@ -9,13 +9,15 @@ import { Router } from "@angular/router";
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-
+  userDoc;
   constructor(
     public authService: AuthService,
     public router: Router,
     public ngZone: NgZone
   ) { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    
+   }
 
 }

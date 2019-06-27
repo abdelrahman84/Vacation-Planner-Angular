@@ -15,19 +15,31 @@ import { AuthService } from '../../_services/auth.service';
 export class VacationsListComponent implements OnInit {
   
   list: Vacation[];
-  
+  userDoc;
  
   constructor(private vacationService: VacationService, private afs: AngularFirestore, private datePipe: DatePipe, public authService: AuthService) { }
 
   ngOnInit() {
 
-   this.vacationService.getVacations().subscribe(actionArray => {
-      this.list = actionArray.map(item => { 
-        return {
-        ...item.payload.doc.data()
-        } as Vacation;
+    this.authService.getCurrentUser().then((userID: string) => {
+      //here you can use the id to get the users firestore doc 
+      this.afs.collection('users').doc(userID).valueChanges()
+      .subscribe(userFirestoreDoc => { // remember to subscribe
+        this.userDoc = userFirestoreDoc;
+        this.afs.collection('users').doc(userID).collection('vacations').snapshotChanges().subscribe(actionArray => {
+          this.list = actionArray.map(item => { 
+            return {
+            ...item.payload.doc.data()
+            } as Vacation;
+          })
+    
+        });
       })
-
-    });
+    }).catch(nullID => {
+      //when there is not a current user
+      this.userDoc = null
+    }) 
+  
+    
 }
 }
