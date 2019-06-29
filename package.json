@@ -15,9 +15,9 @@
     "@angular/animations": "^7.2.8",
     "@angular/cdk": "^7.3.3",
     "@angular/cli": "^7.3.9",
-    "@angular/compiler-cli": "^7.2.15",
     "@angular/common": "~7.2.0",
     "@angular/compiler": "~7.2.0",
+    "@angular/compiler-cli": "^7.2.15",
     "@angular/core": "~7.2.0",
     "@angular/fire": "^5.1.2",
     "@angular/forms": "~7.2.0",
@@ -29,10 +29,11 @@
     "bootstrap": "^4.3.1",
     "core-js": "^2.5.4",
     "firebase": "^5.9.3",
+    "moment": "^2.24.0",
     "rxjs": "~6.3.3",
     "tslib": "^1.9.0",
-    "zone.js": "~0.8.26",
-    "typescript": "~3.2.2"
+    "typescript": "~3.2.2",
+    "zone.js": "~0.8.26"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.0",
