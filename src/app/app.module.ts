@@ -28,6 +28,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CurrentVacationsComponent } from './components/current-vacations/current-vacations.component';
 import { SubmitNewVacationComponent } from './components/submit-new-vacation/submit-new-vacation.component';
 import {formatDate} from './Pipes/dateFormat.pipe';
+import * as moment from 'moment'
   
 
 @NgModule({
@@ -41,7 +42,7 @@ import {formatDate} from './Pipes/dateFormat.pipe';
     FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule, BrowserAnimationsModule,
     MatDatepickerModule, MatInputModule,MatNativeDateModule, AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, AngularFireAuthModule,
-    AppRoutingModule 
+    AppRoutingModule
   ],
   providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation, formatDate],
   bootstrap: [AppComponent]
