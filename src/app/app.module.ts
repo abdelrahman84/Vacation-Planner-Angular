@@ -27,11 +27,13 @@ import {AuthService } from './_services/auth.service';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CurrentVacationsComponent } from './components/current-vacations/current-vacations.component';
 import { SubmitNewVacationComponent } from './components/submit-new-vacation/submit-new-vacation.component';
+import {formatDate} from './Pipes/dateFormat.pipe';
   
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, DashboardComponent, CurrentVacationsComponent, SubmitNewVacationComponent  
+    AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, DashboardComponent, CurrentVacationsComponent, SubmitNewVacationComponent,
+    formatDate  
   ],
   imports: [
     BrowserModule,
@@ -41,7 +43,7 @@ import { SubmitNewVacationComponent } from './components/submit-new-vacation/sub
     AngularFirestoreModule, AngularFireAuthModule,
     AppRoutingModule 
   ],
-  providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation],
+  providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation, formatDate],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
