@@ -15,9 +15,9 @@ export class AuthService {
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
-    public router: Router,  
+    public router: Router,
     public ngZone: NgZone // NgZone service to remove outside scope warning
-  ) {    
+  ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
     this.afAuth.authState.subscribe(user => {
@@ -29,15 +29,15 @@ export class AuthService {
         this.getCurrentUser().then((userID: string) => {
           //here you can use the id to get the users firestore doc 
           this.afs.collection('users').doc(userID).valueChanges()
-          .subscribe(userFirestoreDoc => { // remember to subscribe
-            this.userDoc = userFirestoreDoc;
-          })
+            .subscribe(userFirestoreDoc => { // remember to subscribe
+              this.userDoc = userFirestoreDoc;
+            })
         }).catch(nullID => {
           //when there is not a current user
           this.userDoc = null
-        }) 
-      
-        
+        })
+
+
       } else {
         localStorage.setItem('user', null);
         JSON.parse(localStorage.getItem('user'));
@@ -65,7 +65,7 @@ export class AuthService {
         /* Call the SendVerificaitonMail() function when new user sign 
         up and returns promise */
         this.SendVerificationMail();
-        this.SetUserData(result.user);
+        this.SetUserData1(result.user);
       }).catch((error) => {
         window.alert(error.message)
       })
@@ -74,19 +74,19 @@ export class AuthService {
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
     return this.afAuth.auth.currentUser.sendEmailVerification()
-    .then(() => {
-      this.router.navigate(['verify-email-address']);
-    })
+      .then(() => {
+        this.router.navigate(['verify-email-address']);
+      })
   }
 
   // Reset Forggot password
   ForgotPassword(passwordResetEmail) {
     return this.afAuth.auth.sendPasswordResetEmail(passwordResetEmail)
-    .then(() => {
-      window.alert('Password reset email sent, check your inbox.');
-    }).catch((error) => {
-      window.alert(error)
-    })
+      .then(() => {
+        window.alert('Password reset email sent, check your inbox.');
+      }).catch((error) => {
+        window.alert(error)
+      })
   }
 
   // Returns true when user is looged in and email is verified
@@ -103,20 +103,20 @@ export class AuthService {
   // Auth logic to run auth providers
   AuthLogin(provider) {
     return this.afAuth.auth.signInWithPopup(provider)
-    .then((result) => {
-       this.ngZone.run(() => {
+      .then((result) => {
+        this.ngZone.run(() => {
           this.router.navigate(['dashboard']);
         })
-      this.SetUserData(result.user);
-    }).catch((error) => {
-      window.alert(error)
-    })
+        this.SetUserData(result.user);
+      }).catch((error) => {
+        window.alert(error)
+      })
   }
 
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-    SetUserData(user) {
+  SetUserData(user) {
     var userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
     var userData2: User = {
       uid: user.uid,
@@ -126,27 +126,52 @@ export class AuthService {
       emailVerified: user.emailVerified,
       TotalBalance: this.userDoc.TotalBalance,
       AnnualBalance: this.userDoc.AnnualBalance,
-      CasualBalance: this.userDoc.CasualBalance }
-
-      var userData1: User = {
-        uid: user.uid,
-        email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-        emailVerified: user.emailVerified,
-        TotalBalance: 21,
-        AnnualBalance: 15,
-        CasualBalance: 6 
+      CasualBalance: this.userDoc.CasualBalance
     }
-    if (this.userDoc) { return userRef.set(userData2, {
-      merge: true
-    }) } else {
+
+    var userData1: User = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+      TotalBalance: 21,
+      AnnualBalance: 15,
+      CasualBalance: 6
+    }
+    if (this.userDoc) {
+      return userRef.set(userData2, {
+        merge: true
+      })
+    } else {
       return userRef.set(userData1, {
         merge: true
       })
     }
 
   }
+
+  SetUserData1(user) {
+    var userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+
+
+    var userData: User = {
+      uid: user.uid,
+      email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL,
+      emailVerified: user.emailVerified,
+      TotalBalance: 21,
+      AnnualBalance: 15,
+      CasualBalance: 6
+    }
+
+    return userRef.set(userData, {
+      merge: true
+    })
+  }
+
+
 
   // Sign out 
   SignOut() {
