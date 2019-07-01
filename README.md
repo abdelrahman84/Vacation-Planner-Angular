@@ -4,7 +4,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## About
 
-This Application for controlling and managing vacations of a team using Angular. The user first will sign in with google account/or sign up with email/password. After the user is signed it, he is given 21 total vacation days (15 annual, 6 casuals). The app is designed that for sumbitted days by any user, it will not be available for other users, and disabled from calendar. CRUD is done using firebase.
+This Application for controlling and managing vacations of a team using Angular. The user first will sign in with google account/or sign up with email/password. After the user is signed it, he is given 21 total vacation days (15 annual, 6 casuals). The app is designed that for submitted days by any user, it will not be available for other users, and disabled from calendar. CRUD is done using firebase.
 
 ## Getting started
 
