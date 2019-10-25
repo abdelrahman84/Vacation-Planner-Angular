@@ -12,7 +12,7 @@ const routes: Routes = [
 { path: 'register-user', component: SignUpComponent, canActivate: [SecureInnerPagesGuard]  },
 { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [SecureInnerPagesGuard]  },
 { path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [SecureInnerPagesGuard]  },
-{ path: 'app', loadChildren: './dashboard/dashboard.module#DashboardModule' }
+{ path: 'app', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuard] }
 
 ];
 
