@@ -24,17 +24,16 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import {AuthService } from './_services/auth.service';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { CurrentVacationsComponent } from './components/current-vacations/current-vacations.component';
-import { SubmitNewVacationComponent } from './components/submit-new-vacation/submit-new-vacation.component';
 import {formatDate} from './Pipes/dateFormat.pipe';
-import * as moment from 'moment'
+import * as moment from 'moment';
+
   
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, DashboardComponent, CurrentVacationsComponent, SubmitNewVacationComponent,
-    formatDate  
+    AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent,
+    formatDate,
+      
   ],
   imports: [
     BrowserModule,
