@@ -2,18 +2,30 @@
   <div class="displayTableCell">
   <div class="authBlock">
   <h3>Sign Up</h3>
+
+  <form [formGroup]="signupForm" (ngSubmit)="signup()" >
   <div class="formGroup">
-  <input type="email" class="formControl" placeholder="Email Address" #userEmail required>
+     <input type="text" class="formControl" placeholder="user name" name="name" formControlName="name" required>
+      </div>
+  <div class="formGroup">
+  <input type="email" class="formControl" placeholder="Email Address" name="email" formControlName="email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
   </div>
   <div class="formGroup">
-  <input type="password" class="formControl" placeholder="Password" #userPwd required>
+  <input type="password" class="formControl" placeholder="Password"name="password" formControlName="password" required>
   </div>
   <div class="formGroup">
-  <input type="button" class="btn btnPrimary" value="Sign Up" (click)="authService.SignUp(userEmail.value, userPwd.value)">
+    <input type="password" class="formControl" placeholder="Confirm Password" name="password_confirmation" formControlName="password_confirmation" required>
   </div>
+  <div class="formGroup">
+  <button type="submit" class="btn btnPrimary" [disabled]="!signupForm.valid || signupForm.value.password !== signupForm.value.password_confirmation" >Sign Up</button>
+  </div>
+
   <div class="formGroup">
   <span class="or"><span class="orInner">Or</span></span>
   </div>
+
+ </form>
+
   <!-- Continue with Google -->
   <div class="formGroup">
   <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">

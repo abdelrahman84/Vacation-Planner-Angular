@@ -11,8 +11,13 @@ export const environment = {
     projectId: "vacation-planner-angular",
     storageBucket: "vacation-planner-angular.appspot.com",
     messagingSenderId: "572919426701"
-  }
+  },
+
+  baseUrl : 'http://localhost:8000/api'
+
 };
+
+
 
 /*
  * For easier debugging in development mode, you can import the following file

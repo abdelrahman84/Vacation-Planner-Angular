@@ -4,6 +4,9 @@ import { auth } from 'firebase/app';
 import { AngularFireAuth } from "@angular/fire/auth";
 import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore';
 import { Router } from "@angular/router";
+import {HttpClient} from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -12,64 +15,134 @@ import { Router } from "@angular/router";
 export class AuthService {
   userData: any; // Save logged in user data
   userDoc;
+  resourceURL = environment.baseUrl;
+
+  private iss = {
+    login: `${this.resourceURL}/login`,
+    signup: `${this.resourceURL}/signup`
+  }
+
+  private logged = new BehaviorSubject <boolean> (this.loggedIn());
+
+  authState = this.logged.asObservable();
+
+  changeAuthStatus (value: boolean) {
+    this.logged.next(value);
+  }
+
   constructor(
     public afs: AngularFirestore,   // Inject Firestore service
     public afAuth: AngularFireAuth, // Inject Firebase auth service
     public router: Router,
-    public ngZone: NgZone // NgZone service to remove outside scope warning
+    public ngZone: NgZone,// NgZone service to remove outside scope warning
+    private http:HttpClient
   ) {
     /* Saving user data in localstorage when 
     logged in and setting up null when logged out */
-    this.afAuth.authState.subscribe(user => {
-      if (user) {
-        this.userData = user;
-        localStorage.setItem('user', JSON.stringify(this.userData));
-        JSON.parse(localStorage.getItem('user'));
+    // this.afAuth.authState.subscribe(user => {
+    //   if (user) {
+    //     this.userData = user;
+    //     localStorage.setItem('user', JSON.stringify(this.userData));
+    //     JSON.parse(localStorage.getItem('user'));
 
-        this.getCurrentUser().then((userID: string) => {
-          //here you can use the id to get the users firestore doc 
-          this.afs.collection('users').doc(userID).valueChanges()
-            .subscribe(userFirestoreDoc => { // remember to subscribe
-              this.userDoc = userFirestoreDoc;
-            })
-        }).catch(nullID => {
-          //when there is not a current user
-          this.userDoc = null
-        })
+    //     this.getCurrentUser().then((userID: string) => {
+    //       //here you can use the id to get the users firestore doc 
+    //       this.afs.collection('users').doc(userID).valueChanges()
+    //         .subscribe(userFirestoreDoc => { // remember to subscribe
+    //           this.userDoc = userFirestoreDoc;
+    //         })
+    //     }).catch(nullID => {
+    //       //when there is not a current user
+    //       this.userDoc = null
+    //     })
 
 
-      } else {
-        localStorage.setItem('user', null);
-        JSON.parse(localStorage.getItem('user'));
-      }
-    })
+    //   } else {
+    //     localStorage.setItem('user', null);
+    //     JSON.parse(localStorage.getItem('user'));
+    //   }
+    // })
   }
 
-  // Sign in with email/password
-  SignIn(email, password) {
-    return this.afAuth.auth.signInWithEmailAndPassword(email, password)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        });
-        this.SetUserData(result.user);
-      }).catch((error) => {
-        window.alert(error.message)
-      })
+  
+
+  
+
+  // // Sign in with email/password
+  // SignIn(email, password) {
+  //   return this.afAuth.auth.signInWithEmailAndPassword(email, password)
+  //     .then((result) => {
+  //       this.ngZone.run(() => {
+  //         this.router.navigate(['dashboard']);
+  //       });
+  //       this.SetUserData(result.user);
+  //     }).catch((error) => {
+  //       window.alert(error.message)
+  //     })
+  // }
+
+  loggedIn() {
+    return this.isValid(); 
+  }
+
+  isValid() {
+    const token = this.getToken();
+
+    if (token) {
+  
+      const payload = this.payload(token);
+        
+       if (payload) {
+         return Object.values(this.iss).indexOf(payload.iss) > -1 ? true : false;
+       }
+    }
+    return false;
+  }
+
+  payload(token) {
+    const payload = token.split('.')[1];
+    return this.decode(payload);
+  }
+
+  decode(payload) {
+    return JSON.parse(atob(payload));
+  }
+
+  getToken() {
+
+    return localStorage.getItem('token');
   }
 
   // Sign up with email/password
-  SignUp(email, password) {
-    return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
-      .then((result) => {
-        /* Call the SendVerificaitonMail() function when new user sign 
-        up and returns promise */
-        this.SendVerificationMail();
-        this.SetUserData1(result.user);
-      }).catch((error) => {
-        window.alert(error.message)
-      })
+  // SignUp(email, password) {
+  //   return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
+  //     .then((result) => {
+  //       /* Call the SendVerificaitonMail() function when new user sign 
+  //       up and returns promise */
+  //       this.SendVerificationMail();
+  //       this.SetUserData1(result.user);
+  //     }).catch((error) => {
+  //       window.alert(error.message)
+  //     })
+  // }
+
+  signup(data){
+    return this.http.post(`${this.resourceURL}/signup`, data).subscribe(
+      data => this.handleToken(data),
+      error => console.log('error', error)
+    )
   }
+
+  handleToken(token) {
+    this.setToken(token.access_token);
+    this.changeAuthStatus(true);
+    this.router.navigateByUrl('/app');
+  }
+
+  setToken(token) {
+    localStorage.setItem('token', token);
+  }
+
 
   // Send email verfificaiton when new user sign up
   SendVerificationMail() {
