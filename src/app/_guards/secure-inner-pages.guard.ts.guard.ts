@@ -11,11 +11,8 @@ public authService: AuthService,
 public router: Router
 ) { }
 canActivate(
-next: ActivatedRouteSnapshot,
+route: ActivatedRouteSnapshot,
 state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-if(this.authService.isLoggedIn) {
-this.router.navigate(['dashboard'])
-}
-return true;
-}
+    return this.authService.loggedIn();
+   }
 }

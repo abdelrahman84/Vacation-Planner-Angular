@@ -8,11 +8,11 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import { SecureInnerPagesGuard } from './_guards/secure-inner-pages.guard.ts.guard';
 const routes: Routes = [
 {path: '', redirectTo: 'sign-in', pathMatch: 'full'},
-{ path: 'sign-in', component: SignInComponent,canActivate: [SecureInnerPagesGuard]  },
-{ path: 'register-user', component: SignUpComponent, canActivate: [SecureInnerPagesGuard]  },
-{ path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [SecureInnerPagesGuard]  },
+{ path: 'sign-in', component: SignInComponent,canActivate: [AuthGuard]  },
+{ path: 'register-user', component: SignUpComponent, canActivate: [AuthGuard]  },
+{ path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [AuthGuard]  },
 { path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [SecureInnerPagesGuard]  },
-{ path: 'app', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [AuthGuard] }
+{ path: 'app', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [SecureInnerPagesGuard] }
 
 ];
 

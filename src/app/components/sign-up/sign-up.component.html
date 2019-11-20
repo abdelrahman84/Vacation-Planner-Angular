@@ -3,7 +3,7 @@
   <div class="authBlock">
   <h3>Sign Up</h3>
 
-  <form [formGroup]="signupForm" (ngSubmit)="signup()" >
+ <form [formGroup]="signupForm" (ngSubmit)="signup()" >
   <div class="formGroup">
      <input type="text" class="formControl" placeholder="user name" name="name" formControlName="name" required>
       </div>
@@ -11,7 +11,7 @@
   <input type="email" class="formControl" placeholder="Email Address" name="email" formControlName="email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
   </div>
   <div class="formGroup">
-  <input type="password" class="formControl" placeholder="Password"name="password" formControlName="password" required>
+  <input type="password" class="formControl" placeholder="Password" name="password" formControlName="password" required>
   </div>
   <div class="formGroup">
     <input type="password" class="formControl" placeholder="Confirm Password" name="password_confirmation" formControlName="password_confirmation" required>

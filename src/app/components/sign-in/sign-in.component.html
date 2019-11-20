@@ -2,19 +2,22 @@
   <div class="displayTableCell">
   <div class="authBlock">
   <h3>Sign In</h3>
+  <form [formGroup]="loginForm" (ngSubmit)="login()" >
   <div class="formGroup">
-  <input type="text" class="formControl" placeholder="Username" #userName required>
+  <input type="email" class="formControl" placeholder="email address" name="email" formControlName="email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
   </div>
   <div class="formGroup">
-  <input type="password" class="formControl" placeholder="Password" #userPassword required>
+  <input type="password" class="formControl" placeholder="Password" name="password" formControlName="password" required>
   </div>
   <!-- Calling SignIn Api from AuthService -->
   <div class="formGroup">
-  <input type="button" class="btn btnPrimary" value="Log in" (click)="authService.SignIn(userName.value, userPassword.value)">
+  <button type="submit" class="btn btnPrimary" [disabled]="!loginForm.valid">Log in </button>
+  
   </div>
   <div class="formGroup">
   <span class="or"><span class="orInner">Or</span></span>
   </div>
+</form>
   <!-- Calling GoogleAuth Api from AuthService -->
   <div class="formGroup">
   <button type="button" class="btn googleBtn" (click)="authService.GoogleAuth()">

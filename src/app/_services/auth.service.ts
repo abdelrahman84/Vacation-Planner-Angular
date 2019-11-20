@@ -22,7 +22,7 @@ export class AuthService {
     signup: `${this.resourceURL}/signup`
   }
 
-  private logged = new BehaviorSubject <boolean> (this.loggedIn());
+  public logged = new BehaviorSubject <boolean> (this.loggedIn());
 
   authState = this.logged.asObservable();
 
@@ -133,10 +133,17 @@ export class AuthService {
     )
   }
 
+  login(data) {
+    return this.http.post(`${this.resourceURL}/login`, data).subscribe(
+      data => this.handleToken(data),
+      error => console.log('error', error)
+    )
+  }
+
   handleToken(token) {
     this.setToken(token.access_token);
     this.changeAuthStatus(true);
-    this.router.navigateByUrl('/app');
+    this.router.navigateByUrl('/app/dashboard');
   }
 
   setToken(token) {
@@ -163,10 +170,10 @@ export class AuthService {
   }
 
   // Returns true when user is looged in and email is verified
-  get isLoggedIn(): boolean {
-    const user = JSON.parse(localStorage.getItem('user'));
-    return (user !== null && user.emailVerified !== false) ? true : false;
-  }
+  // get isLoggedIn(): boolean {
+  //   const user = JSON.parse(localStorage.getItem('user'));
+  //   return (user !== null && user.emailVerified !== false) ? true : false;
+  // }
 
   // Sign in with Google
   GoogleAuth() {
@@ -267,5 +274,15 @@ export class AuthService {
     return promise
   }
 
+  removeToken() {
+    localStorage.removeItem('token');
+  }
+
+  logout(){
+    this.changeAuthStatus(false);
+    this.removeToken();
+    this.router.navigateByUrl('/sign-in');
+    
+  }
 
 }
