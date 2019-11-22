@@ -4,7 +4,7 @@ export interface User {
   displayName: string;
   photoURL: string;
   emailVerified: boolean;
-  TotalBalance: 21;
-  AnnualBalance: 15;
-  CasualBalance: 6;
+  totalBalance: 21;
+  annualBalance: 15;
+  casualBalance: 6;
 }

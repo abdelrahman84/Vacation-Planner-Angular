@@ -176,80 +176,80 @@ export class AuthService {
   // }
 
   // Sign in with Google
-  GoogleAuth() {
-    return this.AuthLogin(new auth.GoogleAuthProvider());
-  }
+  // GoogleAuth() {
+  //   return this.AuthLogin(new auth.GoogleAuthProvider());
+  // }
 
   // Auth logic to run auth providers
-  AuthLogin(provider) {
-    return this.afAuth.auth.signInWithPopup(provider)
-      .then((result) => {
-        this.ngZone.run(() => {
-          this.router.navigate(['dashboard']);
-        })
-        this.SetUserData(result.user);
-      }).catch((error) => {
-        window.alert(error)
-      })
-  }
+  // AuthLogin(provider) {
+  //   return this.afAuth.auth.signInWithPopup(provider)
+  //     .then((result) => {
+  //       this.ngZone.run(() => {
+  //         this.router.navigate(['dashboard']);
+  //       })
+  //       this.SetUserData(result.user);
+  //     }).catch((error) => {
+  //       window.alert(error)
+  //     })
+  // }
 
   /* Setting up user data when sign in with username/password, 
   sign up with username/password and sign in with social auth  
   provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  SetUserData(user) {
-    var userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    var userData2: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-      TotalBalance: this.userDoc.TotalBalance,
-      AnnualBalance: this.userDoc.AnnualBalance,
-      CasualBalance: this.userDoc.CasualBalance
-    }
+  // SetUserData(user) {
+  //   var userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+  //   var userData2: User = {
+  //     uid: user.uid,
+  //     email: user.email,
+  //     displayName: user.displayName,
+  //     photoURL: user.photoURL,
+  //     emailVerified: user.emailVerified,
+  //     TotalBalance: this.userDoc.TotalBalance,
+  //     AnnualBalance: this.userDoc.AnnualBalance,
+  //     CasualBalance: this.userDoc.CasualBalance
+  //   }
 
-    var userData1: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-      TotalBalance: 21,
-      AnnualBalance: 15,
-      CasualBalance: 6
-    }
-    if (this.userDoc) {
-      return userRef.set(userData2, {
-        merge: true
-      })
-    } else {
-      return userRef.set(userData1, {
-        merge: true
-      })
-    }
+  //   var userData1: User = {
+  //     uid: user.uid,
+  //     email: user.email,
+  //     displayName: user.displayName,
+  //     photoURL: user.photoURL,
+  //     emailVerified: user.emailVerified,
+  //     TotalBalance: 21,
+  //     AnnualBalance: 15,
+  //     CasualBalance: 6
+  //   }
+  //   if (this.userDoc) {
+  //     return userRef.set(userData2, {
+  //       merge: true
+  //     })
+  //   } else {
+  //     return userRef.set(userData1, {
+  //       merge: true
+  //     })
+  //   }
 
-  }
+  // }
 
-  SetUserData1(user) {
-    var userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
+  // SetUserData1(user) {
+  //   var userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
 
 
-    var userData: User = {
-      uid: user.uid,
-      email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified,
-      TotalBalance: 21,
-      AnnualBalance: 15,
-      CasualBalance: 6
-    }
+  //   var userData: User = {
+  //     uid: user.uid,
+  //     email: user.email,
+  //     displayName: user.displayName,
+  //     photoURL: user.photoURL,
+  //     emailVerified: user.emailVerified,
+  //     TotalBalance: 21,
+  //     AnnualBalance: 15,
+  //     CasualBalance: 6
+  //   }
 
-    return userRef.set(userData, {
-      merge: true
-    })
-  }
+  //   return userRef.set(userData, {
+  //     merge: true
+  //   })
+  // }
 
 
 

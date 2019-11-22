@@ -18,7 +18,10 @@ export class SignUpComponent implements OnInit {
             name: null,
             email: null,
             password: null,
-            password_confirmation: null
+            password_confirmation: null,
+            totalBalance: 21,
+            annualBalance: 15,
+            casualBalance: 6
     
         });
     }
