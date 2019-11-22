@@ -113,6 +113,10 @@ export class AuthService {
     return localStorage.getItem('token');
   }
 
+  getUser() {
+    return JSON.parse(localStorage.getItem('user'));
+  }
+
   // Sign up with email/password
   // SignUp(email, password) {
   //   return this.afAuth.auth.createUserWithEmailAndPassword(email, password)
@@ -140,14 +144,15 @@ export class AuthService {
     )
   }
 
-  handleToken(token) {
-    this.setToken(token.access_token);
+  handleToken(data) {
+    this.setToken(data);
     this.changeAuthStatus(true);
     this.router.navigateByUrl('/app/dashboard');
   }
 
-  setToken(token) {
-    localStorage.setItem('token', token);
+  setToken(data) {
+    localStorage.setItem('token', data.access_token);
+    localStorage.setItem('user',JSON.stringify(data.user))
   }
 
 
@@ -276,6 +281,7 @@ export class AuthService {
 
   removeToken() {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   logout(){

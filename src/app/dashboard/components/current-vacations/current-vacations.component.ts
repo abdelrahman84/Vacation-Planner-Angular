@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {AuthService} from '../../../_services/auth.service';
 
 @Component({
   selector: 'app-current-vacations',
@@ -7,9 +8,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CurrentVacationsComponent implements OnInit {
 
-  constructor() { }
+  user
+
+  constructor(private auth: AuthService) { }
 
   ngOnInit() {
+    this.user = this.auth.getUser();
+
+      //console.log(this.user)
   }
 
 }

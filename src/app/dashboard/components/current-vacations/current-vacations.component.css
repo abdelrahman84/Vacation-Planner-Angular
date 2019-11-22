@@ -1,0 +1,9 @@
+.vacations {
+    
+    display: flex;
+    margin: 1rem;
+}
+
+ul {
+    list-style-type: none;
+}
