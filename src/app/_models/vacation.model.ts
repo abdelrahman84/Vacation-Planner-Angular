@@ -4,4 +4,5 @@ export class Vacation {
     SubmissionDate: Date;
     fromDate;
     endDate;
+    vacationScope: string;
   }

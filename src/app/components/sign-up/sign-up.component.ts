@@ -11,6 +11,8 @@ export class SignUpComponent implements OnInit {
     
     signupForm: FormGroup
 
+    selectedRole
+
     constructor(
         public authService: AuthService, private fb: FormBuilder
     ) { 
@@ -21,7 +23,10 @@ export class SignUpComponent implements OnInit {
             password_confirmation: null,
             totalBalance: 21,
             annualBalance: 15,
-            casualBalance: 6
+            casualBalance: 6,
+            type: null,
+            managerEmail: null,
+            employees: []
     
         });
     }
@@ -29,5 +34,14 @@ export class SignUpComponent implements OnInit {
 
     signup() {
         this.authService.signup(this.signupForm.value);
+    }
+
+    changeRole(input) {
+        if (input === 'manager') {
+            this.selectedRole = 'manager'
+        }
+        else if (input === 'staff') {
+            this.selectedRole = 'staff'
+        }
     }
 }

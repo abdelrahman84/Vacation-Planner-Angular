@@ -1,3 +1,14 @@
 .displayTable {
     background: #3F51B5;
 }
+
+.dropdown{
+    margin-bottom: 1rem;
+    width: 50%;
+}
+
+
+.displayTable .btn {
+    font-size:12px;
+   
+}

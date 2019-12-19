@@ -115,7 +115,7 @@ decrement(){
     this.annualVacation=this.userDoc.AnnualBalance-this.DiffDate;
     alert('Annaul Vacation Submitted')
     this.vacationBalance=this.annualVacation+this.userDoc.CasualBalance;
-    
+    //@ts-ignore
     this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow,
     fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)};
 
@@ -138,7 +138,7 @@ decrement(){
     this.CasualBalance=this.userDoc.CasualBalance-this.DiffDate;
     alert('Casual Vacation Submitted')
     this.vacationBalance=this.userDoc.AnnualBalance+this.CasualBalance;
-
+    //@ts-ignore
     this.vacation = {NoOfDays: this.DiffDate,vacationType : this.selectedVacationType, SubmissionDate: this.dateNow,
     fromDate: JSON.stringify(this.startDate), endDate: JSON.stringify(this.endDate)};
 

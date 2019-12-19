@@ -1,3 +1,46 @@
-<p>
-  submit-new-vacation works!
-</p>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+  <div class="inner-adjust">
+    
+    <!-- Show user data when logged in -->
+    <div class="row">
+      <div class="col-md-12">
+
+        <div id="content">
+
+
+          <div id="document">
+
+            <ng-container>
+              <form class="form-horizontal">
+
+                <div style="width: 50%;">
+                  <label>Select Vacation Type</label>
+                  <br>
+                  <select id="vacationType" [(ngModel)]="selectedVacationType" name="first" class="form-control">
+                    <option *ngFor="let o of options">
+                      {{o.name}}
+                    </option>
+                  </select>
+                  <br>
+
+
+                  <app-date-picker (EndDateEvent)="setEndDate($event)" (FromDateEvent)="setFromDate($event)"
+                    (dateDifferenceEvent)="setDifference($event)" class="container"></app-date-picker>
+
+                </div>
+                <br>
+
+
+              </form>
+              <button (click)="submitNewVacation()" class="btn-success" [disabled]="!selectedVacationType || ">Confirm</button>
+
+            </ng-container>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</main>

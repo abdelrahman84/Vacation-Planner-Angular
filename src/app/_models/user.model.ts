@@ -1,10 +1,13 @@
+
+
 export interface User {
-  uid: string;
+  id: string;
   email: string;
   displayName: string;
   photoURL: string;
   emailVerified: boolean;
-  totalBalance: 21;
-  annualBalance: 15;
-  casualBalance: 6;
+  totalBalance: number;
+  annualBalance: number;
+  casualBalance: number;
+
 }

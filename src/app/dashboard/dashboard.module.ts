@@ -7,6 +7,12 @@ import { SubmitNewVacationComponent } from './components/submit-new-vacation/sub
 
 import { VacationListComponent } from './components/vacation-list/vacation-list.component';
 import {DashboardRoutingModule} from './dashboard-routing.module'
+import { FormsModule } from '@angular/forms';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {formatDate} from '../Pipes/dateFormat.pipe'
+import { DatePipe } from '@angular/common';
+
 
 
 @NgModule({
@@ -14,11 +20,16 @@ import {DashboardRoutingModule} from './dashboard-routing.module'
     DashboardComponent,
     CurrentVacationsComponent,
     SubmitNewVacationComponent,
-    VacationListComponent
+    VacationListComponent,
+    DatePickerComponent,
+    formatDate
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    FormsModule,
+    NgbModule
   ], 
+  providers: [DatePickerComponent, DatePipe, formatDate]
 })
 export class DashboardModule { }

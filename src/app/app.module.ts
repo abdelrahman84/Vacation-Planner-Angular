@@ -24,7 +24,7 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import {AuthService } from './_services/auth.service';
-import {formatDate} from './Pipes/dateFormat.pipe';
+
 import * as moment from 'moment';
 
   
@@ -32,7 +32,7 @@ import * as moment from 'moment';
 @NgModule({
   declarations: [
     AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent,
-    formatDate,
+    
       
   ],
   imports: [
@@ -43,7 +43,8 @@ import * as moment from 'moment';
     AngularFirestoreModule, AngularFireAuthModule,
     AppRoutingModule
   ],
-  providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation, formatDate],
+  exports : [NgbdDatepickerRange],
+  providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

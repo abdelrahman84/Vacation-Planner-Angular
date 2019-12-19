@@ -10,12 +10,35 @@
   <div class="formGroup">
   <input type="email" class="formControl" placeholder="Email Address" name="email" formControlName="email" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
   </div>
+
+  
+
   <div class="formGroup">
   <input type="password" class="formControl" placeholder="Password" name="password" formControlName="password" required>
   </div>
+
   <div class="formGroup">
     <input type="password" class="formControl" placeholder="Confirm Password" name="password_confirmation" formControlName="password_confirmation" required>
   </div>
+
+  <div class="formGroup" *ngIf="selectedRole == 'manager'">
+      <input type="password" class="formControl" placeholder="manager" name="password_confirmation" formControlName="password_confirmation" required>
+    </div>
+
+    <div class="formGroup" *ngIf="selectedRole == 'staff'">
+        <input type="email" class="formControl" placeholder="please enter manager's email" name="manager" formControlName="managerEmail" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+      </div> 
+
+  <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Role
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" (click)="changeRole('manager')">manager</a>
+        <a class="dropdown-item" (click)="changeRole('staff')">staff</a>
+      </div>
+    </div>
+
   <div class="formGroup">
   <button type="submit" class="btn btnPrimary" [disabled]="!signupForm.valid || signupForm.value.password !== signupForm.value.password_confirmation" >Sign Up</button>
   </div>
@@ -23,6 +46,8 @@
   <div class="formGroup">
   <span class="or"><span class="orInner">Or</span></span>
   </div>
+
+  
 
  </form>
 
