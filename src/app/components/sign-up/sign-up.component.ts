@@ -23,17 +23,18 @@ export class SignUpComponent implements OnInit {
             password_confirmation: null,
             totalBalance: 21,
             annualBalance: 15,
-            casualBalance: 6,
-            type: null,
-            managerEmail: null,
-            employees: []
+            casualBalance: 6
     
         });
     }
     ngOnInit() { }
 
     signup() {
+        if (this.selectedRole === 'staff') {
         this.authService.signup(this.signupForm.value);
+        } else if (this.selectedRole === 'manager') {
+         this.authService.signupManager(this.signupForm.value);   
+        }
     }
 
     changeRole(input) {

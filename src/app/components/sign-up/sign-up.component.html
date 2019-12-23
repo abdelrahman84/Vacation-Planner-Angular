@@ -21,13 +21,7 @@
     <input type="password" class="formControl" placeholder="Confirm Password" name="password_confirmation" formControlName="password_confirmation" required>
   </div>
 
-  <div class="formGroup" *ngIf="selectedRole == 'manager'">
-      <input type="password" class="formControl" placeholder="manager" name="password_confirmation" formControlName="password_confirmation" required>
-    </div>
-
-    <div class="formGroup" *ngIf="selectedRole == 'staff'">
-        <input type="email" class="formControl" placeholder="please enter manager's email" name="manager" formControlName="managerEmail" required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
-      </div> 
+ 
 
   <div class="dropdown">
       <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

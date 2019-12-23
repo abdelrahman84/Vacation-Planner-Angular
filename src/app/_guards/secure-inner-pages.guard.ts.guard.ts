@@ -10,9 +10,15 @@ constructor(
 public authService: AuthService,
 public router: Router
 ) { }
-canActivate(
-route: ActivatedRouteSnapshot,
-state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    return this.authService.loggedIn();
-   }
+canActivate(next: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.authService.isAuthenticated()) {
+        return true;
+    }
+
+
+    this.router.navigate(['/sign-in']);
+
+    return false;
+  }
+
 }

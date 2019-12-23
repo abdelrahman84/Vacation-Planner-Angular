@@ -12,6 +12,7 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {formatDate} from '../Pipes/dateFormat.pipe'
 import { DatePipe } from '@angular/common';
+import { AdminComponent } from './components/admin/admin.component';
 
 
 
@@ -22,7 +23,8 @@ import { DatePipe } from '@angular/common';
     SubmitNewVacationComponent,
     VacationListComponent,
     DatePickerComponent,
-    formatDate
+    formatDate,
+    AdminComponent
   ],
   imports: [
     CommonModule,

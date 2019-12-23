@@ -137,6 +137,13 @@ export class AuthService {
     )
   }
 
+  signupManager(data){
+    return this.http.post(`${this.resourceURL}/manager/signupmanager`, data).subscribe(
+      data => this.handleTokenAdmin(data),
+      error => console.log('error', error)
+    )
+  }
+
   login(data) {
     return this.http.post(`${this.resourceURL}/login`, data).subscribe(
       data => this.handleToken(data),
@@ -144,15 +151,32 @@ export class AuthService {
     )
   }
 
+  isAuthenticated(): boolean {
+    return localStorage.getItem('token') != null;
+  }
+
   handleToken(data) {
     this.setToken(data);
-    this.changeAuthStatus(true);
+    //this.changeAuthStatus(true);
     this.router.navigateByUrl('/app/dashboard');
   }
 
+  handleTokenAdmin(data) {
+    this.setToken(data);
+    //this.changeAuthStatus(true);
+    this.router.navigateByUrl('/app/dashboard/admin');
+  }
+
+
   setToken(data) {
-    localStorage.setItem('token', data.access_token);
-    localStorage.setItem('user',JSON.stringify(data.user))
+
+    if (data.result.manager) {
+      localStorage.setItem('token', data.result.token);
+     localStorage.setItem('user',JSON.stringify(data.result.manager))
+    } else {
+      localStorage.setItem('token', data.access_token);
+     localStorage.setItem('user',JSON.stringify(data.user))
+    }
   }
 
 
@@ -285,7 +309,7 @@ export class AuthService {
   }
 
   logout(){
-    this.changeAuthStatus(false);
+    //this.changeAuthStatus(false);
     this.removeToken();
     this.router.navigateByUrl('/sign-in');
     
