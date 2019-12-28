@@ -33,6 +33,11 @@
       </div>
     </div>
 
+    <div class="formGroup">
+      <input type="text" class="formControl" placeholder="manager_email" name="manager_id" formControlName="manager_id" *ngIf="selectedRole === 'staff'">
+    </div>
+  
+
   <div class="formGroup">
   <button type="submit" class="btn btnPrimary" [disabled]="!signupForm.valid || signupForm.value.password !== signupForm.value.password_confirmation" >Sign Up</button>
   </div>

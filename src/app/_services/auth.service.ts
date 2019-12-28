@@ -133,7 +133,7 @@ export class AuthService {
   signup(data){
     return this.http.post(`${this.resourceURL}/signup`, data).subscribe(
       data => this.handleToken(data),
-      error => console.log('error', error)
+      error => console.log('error', error),
     )
   }
 
@@ -162,7 +162,7 @@ export class AuthService {
   }
 
   handleTokenAdmin(data) {
-    this.setToken(data);
+    this.setTokenAdmin(data);
     //this.changeAuthStatus(true);
     this.router.navigateByUrl('/app/dashboard/admin');
   }
@@ -170,13 +170,15 @@ export class AuthService {
 
   setToken(data) {
 
-    if (data.result.manager) {
-      localStorage.setItem('token', data.result.token);
-     localStorage.setItem('user',JSON.stringify(data.result.manager))
-    } else {
+   
       localStorage.setItem('token', data.access_token);
      localStorage.setItem('user',JSON.stringify(data.user))
-    }
+    
+  }
+
+  setTokenAdmin(data) {
+    localStorage.setItem('token', data.result.token);
+     localStorage.setItem('user',JSON.stringify(data.result.manager))
   }
 
 
