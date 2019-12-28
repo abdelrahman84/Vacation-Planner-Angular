@@ -13,6 +13,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {formatDate} from '../Pipes/dateFormat.pipe'
 import { DatePipe } from '@angular/common';
 import { AdminComponent } from './components/admin/admin.component';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {HeaderInterceptor} from '../interceptors/header.interceptor';
 
 
 
@@ -32,6 +34,9 @@ import { AdminComponent } from './components/admin/admin.component';
     FormsModule,
     NgbModule
   ], 
-  providers: [DatePickerComponent, DatePipe, formatDate]
+  providers: [DatePickerComponent, DatePipe, formatDate, { provide: HTTP_INTERCEPTORS,
+       useClass: HeaderInterceptor,
+       multi: true
+    }],
 })
 export class DashboardModule { }

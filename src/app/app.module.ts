@@ -27,6 +27,7 @@ import {AuthService } from './_services/auth.service';
 
 import * as moment from 'moment';
 import { AdminSignInComponent } from './components/admin-sign-in/admin-sign-in.component';
+import {HeaderInterceptor} from '../app/interceptors/header.interceptor';
 
   
 
@@ -45,7 +46,7 @@ import { AdminSignInComponent } from './components/admin-sign-in/admin-sign-in.c
     AppRoutingModule
   ],
   exports : [NgbdDatepickerRange],
-  providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation],
+  providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation,   { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

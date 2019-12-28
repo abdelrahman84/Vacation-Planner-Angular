@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbDate, NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
+import {VacationService} from '../../../_services/vacation.service';
 
 @Component({
   selector: 'app-submit-new-vacation',
@@ -19,7 +20,7 @@ export class SubmitNewVacationComponent implements OnInit {
   selectedVacationType
   dateNow : Date = new Date();
 
-  constructor(public calendar: NgbCalendar) { }
+  constructor(public calendar: NgbCalendar, public vacationService: VacationService) { }
 
   ngOnInit() {
   }
@@ -38,7 +39,10 @@ export class SubmitNewVacationComponent implements OnInit {
 
   submitNewVacation() {
 
- console.log(this.DiffDate,this.selectedVacationType, this.dateNow, this.startDate,this.endDate);
+    var sumbittedStartDate = new Date(this.startDate.year, this.startDate.month - 1, this.startDate.day +1);
+    var sumbittedEndDate = new Date(this.endDate.year, this.endDate.month - 1, this.endDate.day+1);
+
+ this.vacationService.submitNewVacation(sumbittedStartDate,sumbittedEndDate,this.DiffDate,this.selectedVacationType);
   }
 
 }

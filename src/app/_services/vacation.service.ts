@@ -4,6 +4,8 @@ import { AngularFireDatabase, AngularFireList, AngularFireObject } from '@angula
 import {Vacation} from '../_models/vacation.model';
 import { reject } from 'q';
 import { AuthService } from '../_services/auth.service';
+import {environment} from '../../environments/environment';
+import {HttpClient} from '@angular/common/http';
 
 
 @Injectable({
@@ -11,8 +13,10 @@ import { AuthService } from '../_services/auth.service';
 })
 export class VacationService {
 
+  resourceURL = environment.baseUrl;
 
-constructor(public afs: AngularFirestore, public auth: AuthService) {
+
+constructor(public afs: AngularFirestore, public auth: AuthService,  private http:HttpClient) {
 
   this.auth.getCurrentUser().then((userID: string) => {
     //here you can use the id to get the users firestore doc 
@@ -29,7 +33,12 @@ constructor(public afs: AngularFirestore, public auth: AuthService) {
 vacation: Vacation;
 userDoc;
 
-
+submitNewVacation(fromDate, endDate, NoOfDays, vacationType) {
+  return this.http.post(`${this.resourceURL}/submitnewvacation`, {fromDate: fromDate, endDate: endDate, NoOfDays: NoOfDays, vacationType: vacationType}).subscribe(
+    data => console.log(data),
+    error => console.log('error', error),
+  )
+}
 
 getVacations(){
   return this.afs.collection('users').doc(this.userDoc.uid).collection('vacations').snapshotChanges();
