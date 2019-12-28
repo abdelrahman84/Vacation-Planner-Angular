@@ -26,12 +26,13 @@ import { VerifyEmailComponent } from './components/verify-email/verify-email.com
 import {AuthService } from './_services/auth.service';
 
 import * as moment from 'moment';
+import { AdminSignInComponent } from './components/admin-sign-in/admin-sign-in.component';
 
   
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent,
+    AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, AdminSignInComponent,
     
       
   ],

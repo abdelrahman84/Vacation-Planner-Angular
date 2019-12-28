@@ -6,12 +6,14 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { AuthGuard } from "./_guards/auth.guard";
 import { VerifyEmailComponent } from './components/verify-email/verify-email.component';
 import { SecureInnerPagesGuard } from './_guards/secure-inner-pages.guard.ts.guard';
+import { AdminSignInComponent } from './components/admin-sign-in/admin-sign-in.component';
 const routes: Routes = [
 {path: '', redirectTo: 'sign-in', pathMatch: 'full'},
 { path: 'sign-in', component: SignInComponent,canActivate: [AuthGuard]  },
 { path: 'register-user', component: SignUpComponent, canActivate: [AuthGuard]  },
 { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [AuthGuard]  },
 { path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [SecureInnerPagesGuard]  },
+{ path: 'adminlogin', component: AdminSignInComponent,canActivate: [AuthGuard]  },
 { path: 'app', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [SecureInnerPagesGuard] }
 
 ];
