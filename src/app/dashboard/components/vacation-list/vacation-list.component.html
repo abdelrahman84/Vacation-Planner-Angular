@@ -1,3 +1,23 @@
-<p>
-  vacation-list works!
-</p>
+<p *ngIf="!Vacations.length">No pending vacations</p>
+
+
+<nz-table *ngIf="Vacations.length">
+  <thead>
+    <tr>
+      <th>Submission Date</th>
+      <th>From Date</th>
+      <th>End Date</th>
+      <th>Number of Days</th>
+      <th>Vacation Type</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let vacation of Vacations">
+      <td>{{vacation.created_at | date}}</td>
+      <td>{{vacation.fromDate | date}}</td>
+      <td>{{vacation.endDate | date}}</td>
+      <td>{{vacation.NoOfDays}}</td>
+      <td>{{vacation.vacationType}}</td>
+    </tr>
+  </tbody>
+</nz-table>

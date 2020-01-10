@@ -14,6 +14,8 @@ import {formatDate} from '../Pipes/dateFormat.pipe'
 import { DatePipe } from '@angular/common';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {HeaderInterceptor} from '../interceptors/header.interceptor';
+import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import en from '@angular/common/locales/en';
 
 
 
@@ -30,11 +32,12 @@ import {HeaderInterceptor} from '../interceptors/header.interceptor';
     CommonModule,
     DashboardRoutingModule,
     FormsModule,
-    NgbModule
+    NgbModule,
+    NgZorroAntdModule
   ], 
   providers: [DatePickerComponent, DatePipe, formatDate, { provide: HTTP_INTERCEPTORS,
        useClass: HeaderInterceptor,
        multi: true
-    }],
+    }, { provide: NZ_I18N, useValue: en_US }],
 })
 export class DashboardModule { }
