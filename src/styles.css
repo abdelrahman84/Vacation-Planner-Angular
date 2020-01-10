@@ -667,3 +667,7 @@ body .table thead th {
     display: none;
   }
 }
+
+.ant-message {
+  color: green !important;
+}

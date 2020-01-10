@@ -13,7 +13,7 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import {VacationService} from './_services/vacation.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, registerLocaleData } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import {Vacation} from './_models/vacation.model';
 import { AngularFireAuthModule } from '@angular/fire/auth';
@@ -26,6 +26,10 @@ import {AuthService } from './_services/auth.service';
 import * as moment from 'moment';
 import { AdminSignInComponent } from './components/admin-sign-in/admin-sign-in.component';
 import {HeaderInterceptor} from '../app/interceptors/header.interceptor';
+import { NgZorroAntdModule, NZ_I18N, en_US } from 'ng-zorro-antd';
+import en from '@angular/common/locales/en';
+
+registerLocaleData(en);
 
   
 
@@ -41,10 +45,11 @@ import {HeaderInterceptor} from '../app/interceptors/header.interceptor';
     FormsModule, ReactiveFormsModule, HttpClientModule, NgbModule, BrowserAnimationsModule,
     MatDatepickerModule, MatInputModule,MatNativeDateModule, AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule, AngularFireAuthModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgZorroAntdModule
   ],
   exports : [],
-  providers: [AuthService, DatePipe, VacationService, Vacation,   { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },],
+  providers: [AuthService, DatePipe, VacationService, Vacation,   { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true }, { provide: NZ_I18N, useValue: en_US },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
