@@ -8,7 +8,6 @@ import { SubmitNewVacationComponent } from './components/submit-new-vacation/sub
 
 import { VacationListComponent } from './components/vacation-list/vacation-list.component';
 import { DashboardComponent } from './dashboard.component';
-import { AdminComponent } from './components/admin/admin.component';
 
 const routes: Routes = [
 
@@ -20,8 +19,7 @@ const routes: Routes = [
     {path: '', redirectTo: 'currentVacations'},
    { path: 'currentVacations', component: CurrentVacationsComponent },
    { path: 'sumbitnewvacation', component: SubmitNewVacationComponent },
-   { path: 'vacationslist', component: VacationListComponent },
-   { path: 'admin', component: AdminComponent }
+   { path: 'vacationslist', component: VacationListComponent }
       ]
     }
 ]

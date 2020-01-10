@@ -14,7 +14,8 @@ const routes: Routes = [
 { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [AuthGuard]  },
 { path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [SecureInnerPagesGuard]  },
 { path: 'adminlogin', component: AdminSignInComponent,canActivate: [AuthGuard]  },
-{ path: 'app', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [SecureInnerPagesGuard] }
+{ path: 'app', loadChildren: './dashboard/dashboard.module#DashboardModule', canActivate: [SecureInnerPagesGuard]},
+ {path: 'manager', loadChildren: './manager/manager.module#ManagerModule', canActivate: [SecureInnerPagesGuard] }
 
 ];
 

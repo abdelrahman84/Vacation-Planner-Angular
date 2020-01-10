@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { NgbdDatepickerRange } from './components/datepicker/datepicker-range'
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MatDatepickerModule, MatInputModule,MatNativeDateModule} from '@angular/material';
 import { RouterModule, Routes } from '@angular/router';
@@ -14,7 +13,6 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import {VacationService} from './_services/vacation.service';
-import { VacationsListComponent } from './components/vacations-list/vacations-list.component';
 import { DatePipe } from '@angular/common';
 import { Pipe, PipeTransform } from '@angular/core';
 import {Vacation} from './_models/vacation.model';
@@ -33,7 +31,7 @@ import {HeaderInterceptor} from '../app/interceptors/header.interceptor';
 
 @NgModule({
   declarations: [
-    AppComponent, NgbdDatepickerRange, VacationsListComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, AdminSignInComponent,
+    AppComponent, SignInComponent, SignUpComponent, ForgotPasswordComponent, VerifyEmailComponent, AdminSignInComponent,
     
       
   ],
@@ -45,8 +43,8 @@ import {HeaderInterceptor} from '../app/interceptors/header.interceptor';
     AngularFirestoreModule, AngularFireAuthModule,
     AppRoutingModule
   ],
-  exports : [NgbdDatepickerRange],
-  providers: [NgbdDatepickerRange, AuthService, DatePipe, VacationService, Vacation,   { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },],
+  exports : [],
+  providers: [AuthService, DatePipe, VacationService, Vacation,   { provide: HTTP_INTERCEPTORS, useClass: HeaderInterceptor, multi: true },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CurrentVacationsComponent } from './current-vacations.component';
+import { ManagerComponent } from './manager.component';
 
-describe('CurrentVacationsComponent', () => {
-  let component: CurrentVacationsComponent;
-  let fixture: ComponentFixture<CurrentVacationsComponent>;
+describe('ManagerComponent', () => {
+  let component: ManagerComponent;
+  let fixture: ComponentFixture<ManagerComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CurrentVacationsComponent ]
+      declarations: [ ManagerComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CurrentVacationsComponent);
+    fixture = TestBed.createComponent(ManagerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

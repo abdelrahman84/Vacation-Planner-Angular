@@ -153,7 +153,13 @@ export class AuthService {
 
   adminLogin(data) {
     return this.http.post(`${this.resourceURL}/manager/adminlogin`, data).subscribe(
-      data => this.handleTokenAdmin(data),
+      data => {
+        if 
+        //@ts-ignore
+        (data.response === 'error') {
+          //@ts-ignore
+          console.log(data.message)} else {
+        this.handleTokenAdmin(data)}},
       error => console.log('error', error)
     )
   }
@@ -171,7 +177,7 @@ export class AuthService {
   handleTokenAdmin(data) {
     this.setTokenAdmin(data);
     //this.changeAuthStatus(true);
-    this.router.navigateByUrl('/app/dashboard/admin');
+    this.router.navigateByUrl('/manager/dashboard');
   }
 
 
@@ -184,7 +190,7 @@ export class AuthService {
   }
 
   setTokenAdmin(data) {
-    localStorage.setItem('token', data.access_token);
+    localStorage.setItem('token', data.result.access_token);
      localStorage.setItem('user',JSON.stringify(data.result.user))
   }
 
